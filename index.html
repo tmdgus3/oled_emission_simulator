@@ -1,459 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OLED Emission Simulator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .number-input::-webkit-inner-spin-button,
-        .number-input::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        .number-input {
-            -moz-appearance: textfield;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>OLED Optical Simulator</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    input, select, button { margin: 0.5rem; padding: 0.4rem; }
+    .layer-row { margin-bottom: 1rem; }
+  </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body>
+  <h1>OLED Emission Simulator</h1>
 
-    <div class="container mx-auto p-4 lg:p-6">
-        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
-            <h1 class="text-3xl font-bold text-gray-900">OLED Emission Simulator</h1>
-            <p class="text-gray-600 mt-1">Model the emission spectrum of a top or bottom emitting OLED microcavity.</p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            
-            <!-- Left Column: Layer Structure -->
-            <div class="lg:col-span-1 bg-white rounded-2xl shadow-lg p-6 h-fit">
-                <h2 class="text-xl font-bold mb-4 border-b pb-3">Device Structure</h2>
-
-                <!-- Top Medium -->
-                <div class="mb-4">
-                    <label for="topMedium" class="block text-sm font-medium text-gray-700 mb-1">Top Medium (Surrounding)</label>
-                    <select id="topMedium" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                        <option value="Air" selected>Air</option>
-                        <option value="Glass">Glass</option>
-                    </select>
-                </div>
-
-                <div class="bg-gray-200 h-1 w-full my-4 rounded-full"></div>
-
-                <!-- Active Layers -->
-                <h3 class="text-lg font-semibold mb-3 text-gray-800">Active Layers</h3>
-                <div id="layers-container" class="space-y-3">
-                    <!-- Layers will be dynamically inserted here -->
-                </div>
-
-                <div class="flex justify-between mt-4">
-                    <button id="add-layer" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">+ Add Layer</button>
-                    <button id="remove-layer" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">- Remove Layer</button>
-                </div>
-
-                 <div class="bg-gray-200 h-1 w-full my-4 rounded-full"></div>
-
-                <!-- Bottom Medium -->
-                <div class="mt-4">
-                    <label for="bottomMedium" class="block text-sm font-medium text-gray-700 mb-1">Bottom Medium (Substrate)</label>
-                    <select id="bottomMedium" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                        <option value="Air">Air</option>
-                        <option value="Glass" selected>Glass</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Right Column: Settings, Chart, and Visualization -->
-            <div class="lg:col-span-2 space-y-6">
-                <div class="bg-white rounded-2xl shadow-lg p-6">
-                    <h2 class="text-xl font-bold mb-4 border-b pb-3">Emission Settings</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="emissive-layer" class="block text-sm font-medium text-gray-700 mb-1">Select Emissive Layer (EML)</label>
-                            <select id="emissive-layer" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                                <!-- Options will be populated by JS -->
-                            </select>
-                        </div>
-                        <div>
-                            <label for="pl-spectrum" class="block text-sm font-medium text-gray-700 mb-1">Select Intrinsic PL Spectrum</label>
-                            <select id="pl-spectrum" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                               <option value="Irppy3" selected>Ir(ppy)3 (Green)</option>
-                               <option value="TADF" >TADF (Blue)</option>
-                               <option value="RedPhos">Red Phosphor</option>
-                            </select>
-                        </div>
-                        <div class="md:col-span-2">
-                             <label for="viewing-angle" class="block text-sm font-medium text-gray-700">Viewing Angle (&theta;)</label>
-                             <div class="flex items-center space-x-3 mt-1">
-                                 <input type="range" id="viewing-angle" min="0" max="89" value="0" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-                                 <span id="angle-value" class="font-mono text-sm bg-gray-100 rounded-md px-2 py-1 w-16 text-center">0&deg;</span>
-                             </div>
-                        </div>
-                    </div>
-                    <div class="mt-6">
-                        <button id="calculate-btn" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition-colors text-lg">Calculate Emission</button>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl shadow-lg p-6">
-                    <canvas id="emissionChart"></canvas>
-                </div>
-                
-                <div class="bg-white rounded-2xl shadow-lg p-6">
-                    <h2 class="text-xl font-bold mb-4 border-b pb-3">Device Visualization</h2>
-                    <div id="device-visualization" class="w-full h-64 bg-gray-50 rounded-lg border border-gray-200"></div>
-                </div>
-            </div>
-        </div>
+  <div id="layer-container">
+    <div class="layer-row">
+      <input type="text" placeholder="Layer name" value="Anode" />
+      <input type="text" placeholder="Material" value="ITO" />
+      <input type="number" placeholder="Thickness (nm)" value="40" />
+      <button onclick="removeLayer(this)">❌</button>
     </div>
-
-    <!-- Modal for Refractive Index -->
-    <div id="nk-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50 transition-opacity">
-        <div class="relative top-20 mx-auto p-5 border w-full max-w-3xl shadow-lg rounded-2xl bg-white">
-            <div class="mt-3">
-                <div class="flex justify-between items-center mb-4">
-                     <h3 id="nk-modal-title" class="text-xl leading-6 font-bold text-gray-900">Refractive Index (n, k)</h3>
-                     <button id="close-nk-modal-btn" class="p-1 rounded-full hover:bg-gray-200">
-                        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                     </button>
-                </div>
-                <div class="mt-2 px-2 py-3">
-                    <canvas id="nkChart"></canvas>
-                </div>
-            </div>
-        </div>
+    <div class="layer-row">
+      <input type="text" placeholder="Layer name" value="HTL" />
+      <input type="text" placeholder="Material" value="NPB" />
+      <input type="number" placeholder="Thickness (nm)" value="75" />
+      <button onclick="removeLayer(this)">❌</button>
     </div>
+    <div class="layer-row">
+      <input type="text" placeholder="Layer name" value="EML" />
+      <input type="text" placeholder="Material" value="Alq3" />
+      <input type="number" placeholder="Thickness (nm)" value="60" />
+      <button onclick="removeLayer(this)">❌</button>
+    </div>
+    <div class="layer-row">
+      <input type="text" placeholder="Layer name" value="Cathode" />
+      <input type="text" placeholder="Material" value="Al" />
+      <input type="number" placeholder="Thickness (nm)" value="100" />
+      <button onclick="removeLayer(this)">❌</button>
+    </div>
+  </div>
+  <button onclick="addLayer()">➕ Add Layer</button>
 
+  <div>
+    <label>Emitter Position (0~1):</label>
+    <input type="number" id="emitter_pos" value="0.5" step="0.05" min="0" max="1" />
+    <label>Viewing Angle (deg):</label>
+    <input type="number" id="view_angle" value="0" step="1" min="0" max="89" />
+  </div>
 
-    <script>
-        // --- DATA ---
-        const wavelength_nm = [];
-        for (let i = 0; i <= 400; i++) {
-            wavelength_nm.push(400 + i);
-        }
+  <button onclick="simulate()">🔍 Calculate Emission</button>
 
-        // Intrinsic PL Spectra Data
-        const plSpectra = {
-            'Irppy3': { peak: 515, fwhm: 60 },
-            'TADF': { peak: 470, fwhm: 50 },
-            'RedPhos': { peak: 620, fwhm: 70 },
-        };
+  <div id="plot" style="width:100%;max-width:800px;height:400px;margin-top:30px;"></div>
 
-        // Material Optical Constants (n, k) with wavelength dependency.
-        const materials = {
-            'Air': {
-                n: wavelength_nm.map(wl => 1.0),
-                k: wavelength_nm.map(wl => 0),
-                color: '#f0f9ff'
-            },
-            'Glass': {
-                n: wavelength_nm.map(wl => 1.52),
-                k: wavelength_nm.map(wl => 0),
-                color: '#e0f2fe'
-            },
-            'Al': {
-                n: wavelength_nm.map(wl => 0.4 + (wl - 400) * ( (2.2 - 0.4) / 400)), // Simplified dispersion
-                k: wavelength_nm.map(wl => 4.0 + (wl - 400) * ( (7.3 - 4.0) / 400)),
-                color: '#a0aec0'
-            },
-            'Ag': {
-                n: wavelength_nm.map(wl => 0.15 + (wl - 400) * ( (0.1 - 0.15) / 400)),
-                k: wavelength_nm.map(wl => 3.0 + (wl - 400) * ( (5.5 - 3.0) / 400)),
-                color: '#cbd5e0'
-            },
-            'NPB': {
-                n: wavelength_nm.map(wl => 1.95 - (wl - 400) * ( (1.95 - 1.75) / 400)),
-                k: wavelength_nm.map(wl => wl < 440 ? Math.pow((440 - wl) / 40, 2) * 0.1 : 0), // Absorption edge
-                color: '#fefcbf'
-            },
-            'CBP': {
-                n: wavelength_nm.map(wl => 1.90 - (wl - 400) * ( (1.90 - 1.70) / 400)),
-                k: wavelength_nm.map(wl => wl < 430 ? Math.pow((430 - wl) / 30, 2) * 0.08 : 0),
-                color: '#fee2e2'
-            },
-            'LiF': {
-                n: wavelength_nm.map(wl => 1.39),
-                k: wavelength_nm.map(wl => 0),
-                color: '#f1f5f9'
-            },
-            'ITO': {
-                n: wavelength_nm.map(wl => 2.1 - (wl - 400) * ( (2.1-1.8) / 400)),
-                k: wavelength_nm.map(wl => 0.05 + (wl - 400) * 0.0001),
-                color: '#ccfbf1'
-            },
-        };
+  <script>
+    function addLayer() {
+      const div = document.createElement("div");
+      div.className = "layer-row";
+      div.innerHTML = `
+        <input type="text" placeholder="Layer name" />
+        <input type="text" placeholder="Material" />
+        <input type="number" placeholder="Thickness (nm)" />
+        <button onclick="removeLayer(this)">❌</button>
+      `;
+      document.getElementById("layer-container").appendChild(div);
+    }
 
-        // --- GLOBAL VARIABLES ---
-        let emissionChart, nkChart;
-        let layers = [];
+    function removeLayer(btn) {
+      btn.parentElement.remove();
+    }
 
-        // --- UI ELEMENTS ---
-        const layersContainer = document.getElementById('layers-container');
-        const addLayerBtn = document.getElementById('add-layer');
-        const removeLayerBtn = document.getElementById('remove-layer');
-        const calculateBtn = document.getElementById('calculate-btn');
-        const emissiveLayerSelect = document.getElementById('emissive-layer');
-        const plSpectrumSelect = document.getElementById('pl-spectrum');
-        const viewingAngleSlider = document.getElementById('viewing-angle');
-        const angleValueSpan = document.getElementById('angle-value');
-        const topMediumSelect = document.getElementById('topMedium');
-        const bottomMediumSelect = document.getElementById('bottomMedium');
-        const deviceVisualizationDiv = document.getElementById('device-visualization');
-        const nkModal = document.getElementById('nk-modal');
-        const nkModalTitle = document.getElementById('nk-modal-title');
-        const closeNkModalBtn = document.getElementById('close-nk-modal-btn');
+    async function simulate() {
+      const layers = [];
+      const rows = document.querySelectorAll(".layer-row");
+      for (let row of rows) {
+        const inputs = row.querySelectorAll("input");
+        layers.push({
+          name: inputs[0].value,
+          material: inputs[1].value,
+          thickness: parseFloat(inputs[2].value),
+        });
+      }
 
-        // --- INITIALIZATION ---
-        function initialize() {
-            const defaultLayers = [
-                { material: 'NPB', thickness: 60.0 }, { material: 'Ag', thickness: 20.0 },
-                { material: 'LiF', thickness: 0.6 }, { material: 'CBP', thickness: 45.0 },
-                { material: 'CBP', thickness: 30.0 }, { material: 'NPB', thickness: 200.0 },
-                { material: 'Ag', thickness: 50.0 }, { material: 'Al', thickness: 50.0 },
-            ];
-            defaultLayers.forEach(layer => addLayer(layer.material, layer.thickness));
+      const emitter_pos = parseFloat(document.getElementById("emitter_pos").value);
+      const view_angle = parseFloat(document.getElementById("view_angle").value);
 
-            setupEventListeners();
-            createEmissionChart();
-            createNkChart();
-            updateEmissiveLayerOptions();
-            emissiveLayerSelect.selectedIndex = 4;
-            drawDevice();
-        }
+      const payload = {
+        stack: layers,
+        emitter_position: emitter_pos,
+        view_angle: view_angle,
+      };
 
-        function setupEventListeners() {
-            addLayerBtn.addEventListener('click', () => addLayer());
-            removeLayerBtn.addEventListener('click', removeLayer);
-            calculateBtn.addEventListener('click', runSimulation);
-            viewingAngleSlider.addEventListener('input', () => {
-                angleValueSpan.innerHTML = `${viewingAngleSlider.value}&deg;`;
-            });
-            layersContainer.addEventListener('change', drawDevice);
-            topMediumSelect.addEventListener('change', drawDevice);
-            bottomMediumSelect.addEventListener('change', drawDevice);
-            
-            // Event delegation for viewing n,k data
-            layersContainer.addEventListener('click', function(e) {
-                const button = e.target.closest('.view-nk-btn');
-                if (button) {
-                    const layerDiv = button.closest('.layer-div');
-                    const material = layerDiv.querySelector('.material-select').value;
-                    showNkModal(material);
-                }
-            });
+      const response = await fetch("http://localhost:8000/emission", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-            closeNkModalBtn.addEventListener('click', hideNkModal);
-            nkModal.addEventListener('click', (e) => {
-                if (e.target === nkModal) hideNkModal();
-            });
-        }
+      const result = await response.json();
+      plot(result.wavelength_nm, result.intensity);
+    }
 
-        // --- LAYER MANAGEMENT ---
-        function addLayer(material = 'NPB', thickness = 50.0) {
-            const layerId = `layer-${layers.length}`;
-            const layer = { id: layerId, material, thickness };
-            layers.push(layer);
-
-            const layerDiv = document.createElement('div');
-            layerDiv.id = layerId;
-            layerDiv.className = 'layer-div flex items-center space-x-2 p-2 bg-gray-50 rounded-lg border';
-            layerDiv.innerHTML = `
-                <div class="flex-grow">
-                    <select class="material-select w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg p-2">
-                        ${Object.keys(materials).map(m => `<option value="${m}" ${m === material ? 'selected' : ''}>${m}</option>`).join('')}
-                    </select>
-                </div>
-                <button class="view-nk-btn p-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors" title="View n,k data">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                </button>
-                <div class="w-24">
-                    <input type="number" value="${thickness}" class="thickness-input number-input w-full border border-gray-300 text-gray-900 text-sm rounded-lg p-2 text-right" step="0.1">
-                </div>
-                <span class="text-sm text-gray-500">nm</span>
-            `;
-            layersContainer.appendChild(layerDiv);
-            updateEmissiveLayerOptions();
-            drawDevice();
-        }
-
-        function removeLayer() {
-            if (layers.length > 1) {
-                const lastLayer = layers.pop();
-                document.getElementById(lastLayer.id).remove();
-                updateEmissiveLayerOptions();
-                drawDevice();
-            }
-        }
-        
-        function updateEmissiveLayerOptions() {
-            const selectedIndex = emissiveLayerSelect.value;
-            emissiveLayerSelect.innerHTML = '';
-            layers.forEach((layer, index) => {
-                const option = document.createElement('option');
-                option.value = index;
-                option.textContent = `L${index + 1}: ${layer.material} (${layer.thickness} nm)`;
-                emissiveLayerSelect.appendChild(option);
-            });
-            if(selectedIndex < layers.length) {
-                emissiveLayerSelect.value = selectedIndex;
-            }
-        }
-
-        // --- MODAL MANAGEMENT ---
-        function showNkModal(materialKey) {
-            const material = materials[materialKey];
-            if (!material) return;
-
-            nkModalTitle.textContent = `Refractive Index (n,k) for ${materialKey}`;
-            updateNkChart(materialKey, material.n, material.k);
-            nkModal.classList.remove('hidden');
-        }
-
-        function hideNkModal() {
-            nkModal.classList.add('hidden');
-        }
-
-        // --- SIMULATION LOGIC ---
-        function runSimulation() {
-            const deviceStack = buildDeviceStack();
-            const intrinsicPL = generateGaussian(plSpectrumSelect.value);
-            const angle = parseFloat(viewingAngleSlider.value);
-            const emissionSpectrum = calculateEmission(deviceStack, intrinsicPL, angle);
-            updateEmissionChart(intrinsicPL, emissionSpectrum, angle);
-        }
-
-        function buildDeviceStack() {
-            const stack = [];
-            stack.push({ materialKey: topMediumSelect.value, material: materials[topMediumSelect.value], thickness: Infinity });
-            const currentLayers = readLayersFromDOM();
-            currentLayers.forEach(layer => {
-                stack.push({ materialKey: layer.material, material: materials[layer.material], thickness: layer.thickness });
-            });
-            stack.push({ materialKey: bottomMediumSelect.value, material: materials[bottomMediumSelect.value], thickness: Infinity });
-            return stack;
-        }
-
-        function readLayersFromDOM() {
-            const updatedLayers = [];
-            for (let i = 0; i < layers.length; i++) {
-                const layerDiv = document.getElementById(layers[i].id);
-                const material = layerDiv.querySelector('.material-select').value;
-                const thickness = parseFloat(layerDiv.querySelector('.thickness-input').value);
-                layers[i] = { ...layers[i], material, thickness };
-                updatedLayers.push(layers[i]);
-            }
-            return updatedLayers;
-        }
-
-        function generateGaussian(spectrumKey) {
-            const { peak, fwhm } = plSpectra[spectrumKey];
-            const sigma = fwhm / (2 * Math.sqrt(2 * Math.log(2)));
-            const normalized = wavelength_nm.map(wl => Math.exp(-0.5 * Math.pow((wl - peak) / sigma, 2)));
-            const maxVal = Math.max(...normalized);
-            return normalized.map(v => v / maxVal);
-        }
-        
-        function calculateEmission(deviceStack, intrinsicPL, angle) {
-            const cavitySpectrum = [];
-            const emlIndex = parseInt(emissiveLayerSelect.value) + 1;
-
-            for (let i = 0; i < wavelength_nm.length; i++) {
-                const wl = wavelength_nm[i];
-                let topOpticalThickness = 0;
-                for (let j = 1; j < emlIndex; j++) {
-                    topOpticalThickness += deviceStack[j].material.n[i] * deviceStack[j].thickness;
-                }
-                let bottomOpticalThickness = 0;
-                for (let j = emlIndex + 1; j < deviceStack.length - 1; j++) {
-                    bottomOpticalThickness += deviceStack[j].material.n[i] * deviceStack[j].thickness;
-                }
-                const totalOpticalPath = topOpticalThickness + bottomOpticalThickness + (deviceStack[emlIndex].material.n[i] * deviceStack[emlIndex].thickness);
-                const resonanceFactor = Math.pow(Math.cos(2 * Math.PI * totalOpticalPath / wl), 2);
-                const angleRad = angle * Math.PI / 180;
-                const angularFactor = Math.cos(angleRad);
-                cavitySpectrum.push(intrinsicPL[i] * resonanceFactor * angularFactor);
-            }
-
-            const maxVal = Math.max(...cavitySpectrum);
-            return maxVal > 0 ? cavitySpectrum.map(v => v / maxVal) : cavitySpectrum;
-        }
-
-        // --- CHARTING & VISUALIZATION ---
-        function createEmissionChart() {
-            const ctx = document.getElementById('emissionChart').getContext('2d');
-            emissionChart = new Chart(ctx, { type: 'line', data: { labels: wavelength_nm, datasets: [] }, options: { responsive: true, scales: { x: { title: { display: true, text: 'Wavelength (nm)' } }, y: { title: { display: true, text: 'Normalized Intensity' }, min: 0, max: 1.1 } }, plugins: { legend: { position: 'top' } }, elements: { point: { radius: 0 } } } });
-        }
-
-        function createNkChart() {
-            const ctx = document.getElementById('nkChart').getContext('2d');
-            nkChart = new Chart(ctx, {
-                type: 'line',
-                data: { labels: wavelength_nm, datasets: [] },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: { title: { display: true, text: 'Wavelength (nm)' } },
-                        y: { type: 'linear', position: 'left', title: { display: true, text: 'Real (n)' } },
-                        y1: { type: 'linear', position: 'right', title: { display: true, text: 'Imaginary (k)' }, grid: { drawOnChartArea: false } }
-                    },
-                    elements: { point: { radius: 0 } }
-                }
-            });
-        }
-
-        function updateEmissionChart(intrinsicPL, emissionSpectrum, angle) {
-            emissionChart.data.datasets = [
-                { label: 'Intrinsic PL Spectrum', data: intrinsicPL, borderColor: 'rgba(107, 114, 128, 0.8)', borderWidth: 2, borderDash: [5, 5], tension: 0.1 },
-                { label: `Emission Spectrum at ${angle}&deg;`, data: emissionSpectrum, borderColor: 'rgba(220, 38, 38, 0.9)', backgroundColor: 'rgba(220, 38, 38, 0.1)', borderWidth: 3, fill: true, tension: 0.1 }
-            ];
-            emissionChart.update();
-        }
-
-        function updateNkChart(materialKey, n_data, k_data) {
-            nkChart.data.datasets = [
-                { label: 'Real (n)', data: n_data, borderColor: 'rgb(220, 38, 38)', yAxisID: 'y', tension: 0.1 },
-                { label: 'Imaginary (k)', data: k_data, borderColor: 'rgb(59, 130, 246)', yAxisID: 'y1', tension: 0.1 }
-            ];
-            nkChart.options.plugins.title = { display: true, text: `Optical Constants for ${materialKey}` };
-            nkChart.update();
-        }
-
-        function drawDevice() {
-            deviceVisualizationDiv.innerHTML = '';
-            const currentLayers = readLayersFromDOM();
-            const fullStack = [
-                { materialKey: topMediumSelect.value, thickness: 50, label: `Top: ${topMediumSelect.value}` },
-                ...currentLayers.map((l, i) => ({ ...l, materialKey: l.material, label: `L${i+1}: ${l.material}`})),
-                { materialKey: bottomMediumSelect.value, thickness: 50, label: `Bottom: ${bottomMediumSelect.value}` }
-            ];
-            const totalThickness = fullStack.reduce((sum, layer) => sum + (layer.thickness === Infinity ? 50 : layer.thickness), 0);
-
-            fullStack.forEach((layer, index) => {
-                const layerDiv = document.createElement('div');
-                const materialInfo = materials[layer.materialKey];
-                const height = Math.max((layer.thickness === Infinity ? 50 : layer.thickness) / totalThickness * 100, 2);
-                layerDiv.style.height = `${height}%`;
-                layerDiv.style.backgroundColor = materialInfo.color;
-                layerDiv.className = 'w-full flex items-center justify-center text-xs font-medium text-gray-700 border-b border-gray-400/50';
-                let labelText = layer.label;
-                if (layer.thickness !== Infinity) labelText += ` (${layer.thickness} nm)`;
-                if (height > 5) layerDiv.textContent = labelText;
-                if (emissiveLayerSelect.value && parseInt(emissiveLayerSelect.value) === index - 1) {
-                    layerDiv.style.boxShadow = 'inset 0 0 0 3px #ef4444';
-                    layerDiv.style.position = 'relative';
-                    layerDiv.style.zIndex = '10';
-                }
-                deviceVisualizationDiv.appendChild(layerDiv);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', initialize);
-    </script>
+    function plot(wavelengths, intensity) {
+      const trace = {
+        x: wavelengths,
+        y: intensity,
+        type: 'scatter',
+        mode: 'lines',
+        name: 'Emission Spectrum'
+      };
+      const layout = {
+        title: 'Emission Spectrum',
+        xaxis: { title: 'Wavelength (nm)' },
+        yaxis: { title: 'Intensity (normalized)' }
+      };
+      Plotly.newPlot("plot", [trace], layout);
+    }
+  </script>
 </body>
 </html>

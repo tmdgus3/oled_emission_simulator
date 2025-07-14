@@ -2,118 +2,140 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>OLED Optical Simulator</title>
+  <title>OLED Simulator</title>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
     body { font-family: sans-serif; margin: 2rem; }
-    input, select, button { margin: 0.5rem; padding: 0.4rem; }
-    .layer-row { margin-bottom: 1rem; }
+    .tab { display: none; }
+    .tab.active { display: block; }
+    .layer-row input { margin: 0.2rem; padding: 0.3rem; }
+    .layer-row select, .layer-row button { margin: 0.2rem; }
+    .tabs button { padding: 0.5rem 1rem; margin-right: 0.5rem; }
+    .tabs button.active { font-weight: bold; }
   </style>
 </head>
 <body>
-  <h1>OLED Emission Simulator</h1>
 
-  <div id="layer-container">
-    <div class="layer-row">
-      <input type="text" placeholder="Layer name" value="Anode" />
-      <input type="text" placeholder="Material" value="ITO" />
-      <input type="number" placeholder="Thickness (nm)" value="40" />
-      <button onclick="removeLayer(this)">❌</button>
-    </div>
-    <div class="layer-row">
-      <input type="text" placeholder="Layer name" value="HTL" />
-      <input type="text" placeholder="Material" value="NPB" />
-      <input type="number" placeholder="Thickness (nm)" value="75" />
-      <button onclick="removeLayer(this)">❌</button>
-    </div>
-    <div class="layer-row">
-      <input type="text" placeholder="Layer name" value="EML" />
-      <input type="text" placeholder="Material" value="Alq3" />
-      <input type="number" placeholder="Thickness (nm)" value="60" />
-      <button onclick="removeLayer(this)">❌</button>
-    </div>
-    <div class="layer-row">
-      <input type="text" placeholder="Layer name" value="Cathode" />
-      <input type="text" placeholder="Material" value="Al" />
-      <input type="number" placeholder="Thickness (nm)" value="100" />
-      <button onclick="removeLayer(this)">❌</button>
-    </div>
-  </div>
-  <button onclick="addLayer()">➕ Add Layer</button>
+  <h1>OLED Optical Simulator</h1>
 
-  <div>
-    <label>Emitter Position (0~1):</label>
-    <input type="number" id="emitter_pos" value="0.5" step="0.05" min="0" max="1" />
-    <label>Viewing Angle (deg):</label>
-    <input type="number" id="view_angle" value="0" step="1" min="0" max="89" />
+  <!-- TAB BUTTONS -->
+  <div class="tabs">
+    <button onclick="showTab('structure')" class="active">Structure</button>
+    <button onclick="showTab('simulate')">1D Simulation</button>
+    <button onclick="showTab('sweep')">Sweep</button>
+    <button onclick="showTab('result')">Result</button>
   </div>
 
-  <button onclick="simulate()">🔍 Calculate Emission</button>
+  <!-- STRUCTURE TAB -->
+  <div id="structure" class="tab active">
+    <h2>Layer Stack Editor</h2>
+    <div id="layer-container"></div>
+    <button onclick="addLayer()">➕ Add Layer</button>
+  </div>
 
-  <div id="plot" style="width:100%;max-width:800px;height:400px;margin-top:30px;"></div>
+  <!-- SIMULATION TAB -->
+  <div id="simulate" class="tab">
+    <h2>Run 1D Simulation</h2>
+    <label>Emitter Position (0~1): <input id="emitter_pos" type="number" value="0.5" step="0.05" /></label>
+    <label>Viewing Angle (deg): <input id="view_angle" type="number" value="0" step="1" /></label>
+    <br><br>
+    <button onclick="runEmission()">🔍 Emission Spectrum</button>
+    <button onclick="runRT()">📡 RT Spectrum</button>
+  </div>
+
+  <!-- SWEEP TAB -->
+  <div id="sweep" class="tab">
+    <h2>Parameter Sweep (coming soon)</h2>
+  </div>
+
+  <!-- RESULT TAB -->
+  <div id="result" class="tab">
+    <h2>Output Plot</h2>
+    <div id="plot" style="width:100%; max-width:800px; height:400px;"></div>
+  </div>
 
   <script>
+    // Tab switching
+    function showTab(id) {
+      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // Add layer
     function addLayer() {
-      const div = document.createElement("div");
-      div.className = "layer-row";
-      div.innerHTML = `
-        <input type="text" placeholder="Layer name" />
-        <input type="text" placeholder="Material" />
-        <input type="number" placeholder="Thickness (nm)" />
-        <button onclick="removeLayer(this)">❌</button>
+      const row = document.createElement("div");
+      row.className = "layer-row";
+      row.innerHTML = `
+        <input type="text" placeholder="Layer Name" value="Layer" />
+        <input type="text" placeholder="Material" value="Alq3" />
+        <input type="number" placeholder="Thickness" value="60" />
+        <input type="color" value="#cccccc" />
+        <button onclick="this.parentElement.remove()">❌</button>
       `;
-      document.getElementById("layer-container").appendChild(div);
+      document.getElementById("layer-container").appendChild(row);
     }
 
-    function removeLayer(btn) {
-      btn.parentElement.remove();
+    // On load: add default stack
+    window.onload = () => {
+      ["ITO", "NPB", "Alq3", "Al"].forEach(mat => {
+        addLayer();
+        const rows = document.querySelectorAll(".layer-row");
+        const last = rows[rows.length - 1].querySelectorAll("input");
+        last[0].value = mat === "Alq3" ? "EML" : mat;
+        last[1].value = mat;
+        last[2].value = mat === "ITO" ? 40 : mat === "NPB" ? 75 : mat === "Al" ? 100 : 60;
+      });
+    };
+
+    // Emit to API
+    async function runEmission() {
+      const payload = buildPayload();
+      const res = await fetch("http://localhost:8000/emission", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(payload)
+      });
+      const json = await res.json();
+      plot(json.wavelength_nm, json.intensity, "Emission Spectrum");
+      showTab('result');
     }
 
-    async function simulate() {
+    async function runRT() {
+      const payload = buildPayload();
+      const res = await fetch("http://localhost:8000/rt", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(payload)
+      });
+      const json = await res.json();
+      plot(json.wavelength_nm, json.R.map(r=>r*100), "Reflectance (%)");
+    }
+
+    function buildPayload() {
       const layers = [];
-      const rows = document.querySelectorAll(".layer-row");
-      for (let row of rows) {
+      document.querySelectorAll(".layer-row").forEach(row => {
         const inputs = row.querySelectorAll("input");
         layers.push({
           name: inputs[0].value,
           material: inputs[1].value,
           thickness: parseFloat(inputs[2].value),
         });
-      }
-
-      const emitter_pos = parseFloat(document.getElementById("emitter_pos").value);
-      const view_angle = parseFloat(document.getElementById("view_angle").value);
-
-      const payload = {
-        stack: layers,
-        emitter_position: emitter_pos,
-        view_angle: view_angle,
-      };
-
-      const response = await fetch("http://localhost:8000/emission", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
       });
-
-      const result = await response.json();
-      plot(result.wavelength_nm, result.intensity);
+      return {
+        stack: layers,
+        emitter_position: parseFloat(document.getElementById("emitter_pos").value),
+        view_angle: parseFloat(document.getElementById("view_angle").value),
+      };
     }
 
-    function plot(wavelengths, intensity) {
-      const trace = {
-        x: wavelengths,
-        y: intensity,
-        type: 'scatter',
-        mode: 'lines',
-        name: 'Emission Spectrum'
-      };
-      const layout = {
-        title: 'Emission Spectrum',
-        xaxis: { title: 'Wavelength (nm)' },
-        yaxis: { title: 'Intensity (normalized)' }
-      };
-      Plotly.newPlot("plot", [trace], layout);
+    function plot(x, y, title) {
+      Plotly.newPlot("plot", [{
+        x, y, type: "scatter", mode: "lines", name: title
+      }], {
+        title, xaxis: { title: "Wavelength (nm)" }, yaxis: { title: "Value" }
+      });
     }
   </script>
 </body>

@@ -43,6 +43,8 @@ def load_materials():
                 materials_db[name] = df.sort_values("wavelength_nm").reset_index(drop=True)
 
 def get_n_complex(material, wl):
+    if material == "Air":
+        return 1.0 + 0j
     if material not in materials_db:
         raise ValueError(f"{material} not found in database.")
     df = materials_db[material]

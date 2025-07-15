@@ -9,6 +9,23 @@ import copy
 import io
 import urllib.request
 
+# --- Access Control ---
+def check_password():
+    def password_entered():
+        if st.session_state["password"] == "oeml2025":  # 원하는 비밀번호로 설정
+            st.session_state["authenticated"] = True
+        else:
+            st.error("비밀번호가 틀렸습니다.")
+
+    if "authenticated" not in st.session_state:
+        st.session_state["authenticated"] = False
+
+    if not st.session_state["authenticated"]:
+        st.text_input("🔒 비밀번호를 입력하세요:", type="password", on_change=password_entered, key="password")
+        st.stop()
+
+check_password()
+
 # --- Page Configuration (MUST BE THE FIRST STREAMLIT COMMAND) ---
 st.set_page_config(
     page_title="OLED Optical Simulator",

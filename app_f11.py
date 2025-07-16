@@ -403,6 +403,13 @@ def calculate_radiance_luminance(wavelengths, spectrum):
     luminance = np.trapz(spectrum * y_interp, wavelengths)
     return radiance, luminance
 
+def calculate_dissipated_power(u_vals, wavelength_nm):
+    """사용자 정의: u_inplane vs dissipated power 그래프용 더미 계산"""
+    center = 0.9
+    width = 0.02
+    power = np.exp(-((u_vals - center)**2) / (2 * width**2)) * 15
+    return power
+
 def plot_cie_diagram(cie_coords=None):
     """Generates a plot of the CIE 1931 color space with a color-filled background."""
     if not SCIPY_AVAILABLE:
@@ -499,6 +506,50 @@ def initialize_session_state(materials, emitters):
         ]
         st.session_state.init = True
 
+def render_dissipated_power_tab():
+    st.markdown("## 🔥 Dissipated Power Analysis")
+    st.markdown("In-plane wavevector (`u_inplane`) vs. dissipated power")
+
+    wavelength = st.slider("Wavelength (nm)", 400, 700, 530)
+    u_min, u_max = st.slider("u_inplane Range", 0.0, 2.0, (0.0, 2.0), step=0.01)
+    num_points = st.number_input("Number of u_inplane points", 50, 1000, 200, step=10)
+
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        log_x = st.checkbox("Log X-Axis", False)
+        abs_x = st.checkbox("Abs X-Axis", False)
+        inv_x = st.checkbox("Invert X-Axis", False)
+        grid_x = st.checkbox("Grid X", True)
+    with col2:
+        log_y = st.checkbox("Log Y-Axis", False)
+        abs_y = st.checkbox("Abs Y-Axis", False)
+        inv_y = st.checkbox("Invert Y-Axis", False)
+        grid_y = st.checkbox("Grid Y", True)
+
+    if st.button("Run Dissipated Power Simulation"):
+        u_vals = np.linspace(u_min, u_max, num_points)
+        power_vals = calculate_dissipated_power(u_vals, wavelength)
+
+        if abs_y:
+            power_vals = np.abs(power_vals)
+        if abs_x:
+            u_vals = np.abs(u_vals)
+
+        fig, ax = plt.subplots()
+        ax.plot(u_vals, power_vals, color="purple", linewidth=2)
+        ax.set_xlabel("u_inplane (-)")
+        ax.set_ylabel("Dissipated Power (arb. unit)")
+        ax.set_title(f"Dissipated Power @ {wavelength} nm")
+
+        if log_x: ax.set_xscale("log")
+        if log_y: ax.set_yscale("log")
+        if inv_x: ax.invert_xaxis()
+        if inv_y: ax.invert_yaxis()
+        if grid_x or grid_y: ax.grid(True, alpha=0.5)
+
+        st.pyplot(fig)
+
+
 # ==============================================================================
 # 6. MAIN APP UI
 # ==============================================================================
@@ -512,7 +563,7 @@ def main():
     emitters = load_emitter_data()
     initialize_session_state(materials, emitters)
 
-    main_tabs = st.tabs(["**⚙️ Setup & Analysis**", "**📈 Results**"])
+    main_tabs = st.tabs(["**⚙️ Setup & Analysis**", "**📈 Results**", "**🔥 Dissipated Power**"])
 
     # --- SETUP & ANALYSIS TAB ---
     with main_tabs[0]:
@@ -760,6 +811,10 @@ def main():
                         if st.button("Clear All Results", use_container_width=True):
                             st.session_state.results = {}
                             st.rerun()
+
+                with main_tabs[2]:  # 🔥 Dissipated Power
+                    render_dissipated_power_tab()
+
         
         with result_cols[1]:
             st.header("Output Plots")

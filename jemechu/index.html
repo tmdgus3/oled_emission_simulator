@@ -227,7 +227,7 @@
       width: 100%;
       min-height: 210px;
       display: grid;
-      grid-template-rows: auto 1fr auto;
+      grid-template-rows: auto auto 1fr;
       align-items: center;
       justify-items: center;
       gap: 10px;
@@ -243,6 +243,16 @@
       background: rgba(255, 255, 255, .72);
       font-size: .9rem;
       font-weight: 750;
+    }
+
+    .question {
+      max-width: 100%;
+      color: var(--ink);
+      font-size: 1.1rem;
+      line-height: 1.25;
+      font-weight: 900;
+      word-break: keep-all;
+      text-align: center;
     }
 
     .dish {
@@ -541,7 +551,17 @@
         min-height: 188px;
       }
 
-      .dish {
+      .question {
+      max-width: 100%;
+      color: var(--ink);
+      font-size: 1.1rem;
+      line-height: 1.25;
+      font-weight: 900;
+      word-break: keep-all;
+      text-align: center;
+    }
+
+    .dish {
         min-height: 105px;
         font-size: 2.45rem;
       }
@@ -613,9 +633,10 @@
 
       <div class="slot-area" id="slotArea">
         <div class="slot-window">
-          <div class="slot-label" id="slotLabel">오늘 저녁</div>
-          <div class="dish" id="dishName">김치볶음밥</div>
-          <div class="note" id="dishNote">계란후라이 올리면 바로 완성</div>
+          <div class="slot-label" id="slotLabel">26.09.04</div>
+          <div class="question" id="questionText">지영이가 골라주는 오늘의 뭐먹지?</div>
+          <div class="dish" id="dishName">제육덮밥</div>
+
         </div>
       </div>
 
@@ -711,7 +732,6 @@
 
     const DEFAULT_MENUS = {
       "밥": [
-        ["김치볶음밥", "계란후라이 올리면 바로 완성"],
         ["제육덮밥", "매콤하고 실패 확률 낮음"],
         ["오므라이스", "케첩으로 마침표"],
         ["카레라이스", "냉장고 야채 처리까지 가능"],
@@ -724,7 +744,6 @@
         ["오징어덮밥", "불향 나면 더 좋음"],
         ["새우볶음밥", "파기름 내면 승률 상승"],
         ["계란볶음밥", "제일 단순한 정답"],
-        ["깍두기볶음밥", "국밥집 맛이 나는 선택"],
         ["알밥", "톡톡 씹히는 재미"],
         ["비빔밥", "야채 많은 척 가능"],
         ["돌솥비빔밥", "누룽지까지 챙김"],
@@ -817,7 +836,6 @@
       "국물": [
         ["부대찌개", "라면사리 넣으면 끝"],
         ["오뎅탕", "뜨끈하고 가벼운 국물"],
-        ["김치찌개", "돼지고기 많이"],
         ["된장찌개", "밥이랑 제일 안정적"],
         ["순두부찌개", "계란 톡"],
         ["청국장", "강하지만 든든함"],
@@ -846,7 +864,6 @@
         ["라멘", "돈코츠 쇼유 미소 중 택"],
         ["나가사키짬뽕", "하얀 국물인데 진함"],
         ["우동전골", "부담 없는 뜨끈함"],
-        ["김치우동", "칼칼한 면 국물"],
         ["칼만두국", "칼국수와 만두 동시 해결"],
         ["떡국", "계란지단 있으면 좋음"],
         ["만둣국", "냉동만두 구원투수"],
@@ -971,6 +988,13 @@
       return list[Math.floor(Math.random() * list.length)];
     }
 
+    function formatDateYYMMDD(date = new Date()) {
+      const yy = String(date.getFullYear()).slice(-2);
+      const mm = String(date.getMonth() + 1).padStart(2, "0");
+      const dd = String(date.getDate()).padStart(2, "0");
+      return `${yy}.${mm}.${dd}`;
+    }
+
     function getDisplayId(category, item) {
       const prefix = category === "랜덤" ? CATEGORY_PREFIX["랜덤"] : CATEGORY_PREFIX[item.category];
       const number = String(item.index + 1).padStart(3, "0");
@@ -989,9 +1013,11 @@
       els.categoryPill.dataset.category = category;
       els.categoryPill.textContent = category;
       els.resultId.textContent = getDisplayId(category, item);
-      els.slotLabel.textContent = label;
+      els.slotLabel.textContent = formatDateYYMMDD();
       setDishText(item.name);
-      els.dishNote.textContent = item.note || `${item.category} 후보`;
+      if (els.dishNote) {
+        els.dishNote.textContent = item.note || `${item.category} 후보`;
+      }
       updateMenuCount();
     }
 
@@ -1021,7 +1047,7 @@
       state.spinning = true;
       setControlsDisabled(true);
       els.slotArea.classList.add("spinning");
-      els.slotLabel.textContent = "돌아가는 중";
+      els.slotLabel.textContent = formatDateYYMMDD();
       vibrate(16);
 
       function frame(now) {
@@ -1119,7 +1145,7 @@
 
     async function copyResult() {
       if (!state.currentItem) return;
-      const text = `[${state.currentCategory}] ${state.currentItem.name} - ${state.currentItem.note}`;
+      const text = `[${state.currentCategory}] ${state.currentItem.name}`;
       try {
         await navigator.clipboard.writeText(text);
         showToast("복사했어요");
@@ -1146,7 +1172,7 @@
     }
 
     function listToText(list) {
-      return list.map((item) => item.note ? `${item.name} | ${item.note}` : item.name).join("\n");
+      return list.map((item) => item.name).join("\n");
     }
 
     function textToList(text, fallbackCategory) {

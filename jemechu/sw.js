@@ -1,8 +1,9 @@
-const CACHE_NAME = "jemechu-roulette-v3";
+const CACHE_NAME = "jemechu-roulette-v4";
 const ASSETS = [
   "./index.html",
   "./manifest.webmanifest",
-  "./icon.svg"
+  "./icon.svg",
+  "./jiyoung.png"
 ];
 
 self.addEventListener("install", (event) => {

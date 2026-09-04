@@ -5,9 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f05745">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="저메추 룰렛">
+  <meta name="apple-mobile-web-app-title" content="what to eat">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <title>저메추 룰렛</title>
+  <title>what to eat</title>
+  <meta name="description" content="지영이가 골라주는 오늘의 뭐먹지?">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="what to eat">
+  <meta property="og:description" content="지영이가 골라주는 오늘의 뭐먹지?">
+  <meta property="og:url" content="https://cothiol.info/jemechu/">
+  <meta property="og:image" content="https://cothiol.info/jemechu/jiyoung.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="what to eat">
+  <meta name="twitter:description" content="지영이가 골라주는 오늘의 뭐먹지?">
+  <meta name="twitter:image" content="https://cothiol.info/jemechu/jiyoung.png">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <style>
@@ -147,7 +157,7 @@
     .machine {
       align-self: stretch;
       display: grid;
-      grid-template-rows: auto minmax(270px, 1fr) auto;
+      grid-template-rows: minmax(390px, 1fr) auto;
       gap: 12px;
       border: 1px solid rgba(21, 21, 21, .08);
       border-radius: 8px;
@@ -158,11 +168,7 @@
     }
 
     .status-strip {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      align-items: center;
-      min-height: 36px;
+      display: none;
     }
 
     .category-pill {
@@ -191,7 +197,7 @@
       position: relative;
       display: grid;
       place-items: center;
-      min-height: 270px;
+      min-height: 390px;
       border-radius: 8px;
       padding: 18px;
       background:
@@ -255,13 +261,71 @@
       text-align: center;
     }
 
+    .portrait-stage {
+      position: relative;
+      width: min(100%, 390px);
+      min-height: 258px;
+      display: grid;
+      align-items: end;
+      justify-items: center;
+      padding-top: 66px;
+      isolation: isolate;
+    }
+
+    .speech-bubble {
+      position: absolute;
+      top: 4px;
+      left: 50%;
+      z-index: 2;
+      max-width: min(92%, 330px);
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 15px;
+      border: 2px solid rgba(21, 21, 21, .86);
+      border-radius: 999px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, .96);
+      box-shadow: 0 10px 24px rgba(21, 21, 21, .12);
+      font-size: 1.05rem;
+      line-height: 1.15;
+      font-weight: 950;
+      text-align: center;
+      white-space: nowrap;
+      transform: translateX(-50%);
+    }
+
+    .speech-bubble::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -11px;
+      width: 18px;
+      height: 18px;
+      border-right: 2px solid rgba(21, 21, 21, .86);
+      border-bottom: 2px solid rgba(21, 21, 21, .86);
+      background: rgba(255, 255, 255, .96);
+      transform: translateX(-50%) rotate(45deg);
+    }
+
+    .portrait {
+      z-index: 1;
+      width: min(96%, 360px);
+      max-height: 310px;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: drop-shadow(0 18px 26px rgba(21, 21, 21, .18));
+      user-select: none;
+      pointer-events: none;
+    }
     .dish {
       width: 100%;
-      min-height: 112px;
+      min-height: 72px;
       display: grid;
       place-items: center;
       padding: 10px 4px;
-      font-size: 3.1rem;
+      font-size: 2.7rem;
       line-height: 1.08;
       font-weight: 950;
       letter-spacing: 0;
@@ -281,7 +345,7 @@
     .note {
       min-height: 24px;
       color: var(--muted);
-      font-size: 1rem;
+      font-size: .92rem;
       line-height: 1.35;
       word-break: keep-all;
     }
@@ -376,19 +440,19 @@
 
     .category-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 8px;
     }
 
     .category-button {
       min-width: 0;
-      min-height: 76px;
+      min-height: 70px;
       display: grid;
       grid-template-rows: 24px auto;
       align-items: center;
       justify-items: center;
       gap: 4px;
-      padding: 10px 8px;
+      padding: 9px 5px;
       border-radius: 8px;
       color: #fff;
       background: var(--accent);
@@ -415,7 +479,7 @@
     .category-button span {
       min-width: 0;
       max-width: 100%;
-      font-size: 1rem;
+      font-size: .92rem;
       font-weight: 950;
       line-height: 1.05;
       white-space: nowrap;
@@ -427,11 +491,13 @@
     .category-button[data-category="고기"] { --accent: var(--meat); }
     .category-button[data-category="국물"] { --accent: var(--soup); }
     .category-button[data-category="랜덤"] { --accent: var(--random); }
+    .category-button[data-category="졍스팟"] { --accent: var(--spot); }
 
     .category-pill[data-category="밥"] { background: var(--rice); }
     .category-pill[data-category="고기"] { background: var(--meat); }
     .category-pill[data-category="국물"] { background: var(--soup); }
     .category-pill[data-category="랜덤"] { background: var(--random); }
+    .category-pill[data-category="졍스팟"] { background: var(--spot); }
 
     dialog {
       width: min(100% - 24px, 640px);
@@ -538,56 +604,76 @@
       }
 
       .machine {
-        grid-template-rows: auto minmax(245px, 1fr) auto;
+        grid-template-rows: minmax(360px, 1fr) auto;
         padding: 11px;
       }
 
       .slot-area {
-        min-height: 245px;
-        padding: 14px;
+        min-height: 360px;
+        padding: 12px;
       }
 
       .slot-window {
-        min-height: 188px;
+        min-height: 318px;
+        grid-template-rows: auto minmax(235px, 1fr) auto;
+        gap: 8px;
       }
 
-      .question {
-      max-width: 100%;
-      color: var(--ink);
-      font-size: 1.1rem;
-      line-height: 1.25;
-      font-weight: 900;
-      word-break: keep-all;
-      text-align: center;
-    }
+      .portrait-stage {
+        width: 100%;
+        min-height: 235px;
+        padding-top: 58px;
+      }
 
-    .dish {
-        min-height: 105px;
-        font-size: 2.45rem;
+      .speech-bubble {
+        max-width: 94%;
+        min-height: 42px;
+        padding: 9px 13px;
+        font-size: .95rem;
+      }
+
+      .portrait {
+        width: min(98%, 320px);
+        max-height: 275px;
+      }
+
+      .dish {
+        min-height: 58px;
+        padding: 6px 2px;
+        font-size: 2rem;
       }
 
       .dish.is-long {
-        font-size: 1.9rem;
+        font-size: 1.65rem;
       }
 
       .dish.is-extra-long {
-        font-size: 1.52rem;
+        font-size: 1.36rem;
+      }
+
+      .category-grid {
+        gap: 6px;
       }
 
       .category-button {
-        min-height: 70px;
-        padding: 9px 5px;
+        min-height: 62px;
+        grid-template-rows: 20px auto;
+        padding: 7px 3px;
+      }
+
+      .category-button svg {
+        width: 20px;
+        height: 20px;
       }
 
       .category-button span {
-        font-size: .95rem;
+        font-size: .78rem;
       }
 
       .subtitle {
         max-width: 190px;
       }
     }
-
     @media (prefers-reduced-motion: reduce) {
       *,
       *::before,
@@ -613,7 +699,7 @@
           </svg>
         </div>
         <div class="title">
-          <h1>저메추 룰렛</h1>
+          <h1>what to eat</h1>
           <div class="subtitle" id="menuCount">메뉴 계산 중</div>
         </div>
       </div>
@@ -628,15 +714,17 @@
     <section class="machine" aria-live="polite">
       <div class="status-strip">
         <div class="category-pill" id="categoryPill" data-category="밥">밥</div>
-        <div class="result-id" id="resultId">BAP-001</div>
+        <div class="result-id" id="resultId" aria-hidden="true"></div>
       </div>
 
       <div class="slot-area" id="slotArea">
         <div class="slot-window">
           <div class="slot-label" id="slotLabel">26.09.04</div>
-          <div class="question" id="questionText">지영이가 골라주는 오늘의 뭐먹지?</div>
+          <div class="portrait-stage">
+            <div class="speech-bubble" id="speechBubble">오늘의 메뉴는 ....</div>
+            <img class="portrait" src="jiyoung.png" alt="지영이 메뉴 추천">
+          </div>
           <div class="dish" id="dishName">제육덮밥</div>
-
         </div>
       </div>
 
@@ -687,6 +775,12 @@
           </svg>
           <span>랜덤</span>
         </button>
+        <button class="category-button" type="button" data-category="졍스팟">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3.5 14.7 9l6.1.9-4.4 4.3 1 6.1L12 17.4l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z"></path>
+          </svg>
+          <span>졍스팟</span>
+        </button>
       </nav>
       <div class="history" id="history" aria-label="최근 결과"></div>
     </footer>
@@ -716,6 +810,10 @@
           <label for="editSoup">국물</label>
           <textarea id="editSoup" spellcheck="false"></textarea>
         </div>
+        <div class="edit-group">
+          <label for="editSpot">졍스팟</label>
+          <textarea id="editSpot" spellcheck="false"></textarea>
+        </div>
       </div>
       <div class="editor-actions">
         <button class="minor-button" id="resetMenus" type="button">초기화</button>
@@ -727,8 +825,8 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-    const STORAGE_KEY = "jemechu-roulette-v1";
-    const HISTORY_KEY = "jemechu-roulette-history-v1";
+    const STORAGE_KEY = "jemechu-roulette-v2";
+    const HISTORY_KEY = "jemechu-roulette-history-v2";
 
     const DEFAULT_MENUS = {
       "밥": [
@@ -877,15 +975,34 @@
         ["토마토스튜", "빵이랑 잘 맞음"],
         ["크림스프와 바게트", "가볍고 따뜻하게"],
         ["민물새우탕", "시원한 매운 국물"]
+      ],
+      "졍스팟": [
+        ["지영픽 파스타", ""],
+        ["지영픽 돈카츠", ""],
+        ["지영픽 초밥", ""],
+        ["지영픽 쌀국수", ""],
+        ["지영픽 샤브샤브", ""],
+        ["지영픽 마라탕", ""],
+        ["지영픽 떡볶이", ""],
+        ["지영픽 피자", ""],
+        ["지영픽 햄버거", ""],
+        ["지영픽 닭갈비", ""],
+        ["지영픽 양꼬치", ""],
+        ["지영픽 곱창", ""],
+        ["지영픽 브런치", ""],
+        ["지영픽 포케", ""],
+        ["지영픽 카페 디저트", ""],
+        ["지영픽 야식 세트", ""]
       ]
     };
 
-    const CATEGORY_ORDER = ["밥", "고기", "국물", "랜덤"];
+    const CATEGORY_ORDER = ["밥", "고기", "국물", "랜덤", "졍스팟"];
     const CATEGORY_PREFIX = {
       "밥": "BAP",
       "고기": "MEAT",
       "국물": "SOUP",
-      "랜덤": "RAND"
+      "랜덤": "RAND",
+      "졍스팟": "SPOT"
     };
 
     const state = {
@@ -915,6 +1032,7 @@
       editRice: $("#editRice"),
       editMeat: $("#editMeat"),
       editSoup: $("#editSoup"),
+      editSpot: $("#editSpot"),
       saveMenus: $("#saveMenus"),
       resetMenus: $("#resetMenus"),
       toast: $("#toast")
@@ -936,7 +1054,8 @@
         return {
           "밥": normalizeSavedList(saved["밥"], DEFAULT_MENUS["밥"]),
           "고기": normalizeSavedList(saved["고기"], DEFAULT_MENUS["고기"]),
-          "국물": normalizeSavedList(saved["국물"], DEFAULT_MENUS["국물"])
+          "국물": normalizeSavedList(saved["국물"], DEFAULT_MENUS["국물"]),
+          "졍스팟": normalizeSavedList(saved["졍스팟"], DEFAULT_MENUS["졍스팟"])
         };
       } catch {
         return cloneMenus(DEFAULT_MENUS);
@@ -977,7 +1096,7 @@
 
     function getPool(category) {
       if (category === "랜덤") {
-        return ["밥", "고기", "국물"].flatMap((realCategory) =>
+        return CATEGORY_ORDER.filter((realCategory) => realCategory !== "랜덤").flatMap((realCategory) =>
           state.menus[realCategory].map((item, index) => ({ ...item, category: realCategory, index }))
         );
       }
@@ -1012,7 +1131,9 @@
       state.currentItem = item;
       els.categoryPill.dataset.category = category;
       els.categoryPill.textContent = category;
-      els.resultId.textContent = getDisplayId(category, item);
+      if (els.resultId) {
+        els.resultId.textContent = "";
+      }
       els.slotLabel.textContent = formatDateYYMMDD();
       setDishText(item.name);
       if (els.dishNote) {
@@ -1023,7 +1144,7 @@
 
     function updateMenuCount() {
       const total = getPool("랜덤").length;
-      els.menuCount.textContent = `밥 ${state.menus["밥"].length} · 고기 ${state.menus["고기"].length} · 국물 ${state.menus["국물"].length} · 총 ${total}`;
+      els.menuCount.textContent = `밥 ${state.menus["밥"].length} · 고기 ${state.menus["고기"].length} · 국물 ${state.menus["국물"].length} · 졍스팟 ${state.menus["졍스팟"].length} · 총 ${total}`;
     }
 
     function vibrate(pattern) {
@@ -1124,6 +1245,7 @@
       if (category === "고기") return "var(--meat)";
       if (category === "국물") return "var(--soup)";
       if (category === "랜덤") return "var(--random)";
+      if (category === "졍스팟") return "var(--spot)";
       return "var(--rice)";
     }
 
@@ -1191,6 +1313,7 @@
       els.editRice.value = listToText(state.menus["밥"]);
       els.editMeat.value = listToText(state.menus["고기"]);
       els.editSoup.value = listToText(state.menus["국물"]);
+      els.editSpot.value = listToText(state.menus["졍스팟"]);
       if (typeof els.editorDialog.showModal === "function") {
         els.editorDialog.showModal();
       } else {
@@ -1202,6 +1325,7 @@
       state.menus["밥"] = textToList(els.editRice.value, "밥");
       state.menus["고기"] = textToList(els.editMeat.value, "고기");
       state.menus["국물"] = textToList(els.editSoup.value, "국물");
+      state.menus["졍스팟"] = textToList(els.editSpot.value, "졍스팟");
       saveMenusToStorage();
       updateMenuCount();
       showToast("저장했어요");
@@ -1213,6 +1337,7 @@
       els.editRice.value = listToText(state.menus["밥"]);
       els.editMeat.value = listToText(state.menus["고기"]);
       els.editSoup.value = listToText(state.menus["국물"]);
+      els.editSpot.value = listToText(state.menus["졍스팟"]);
       updateMenuCount();
       showToast("기본 메뉴로 바꿨어요");
     }
@@ -1233,6 +1358,7 @@
           "2": "고기",
           "3": "국물",
           "4": "랜덤",
+          "5": "졍스팟",
           "Enter": state.currentCategory || "랜덤",
           " ": state.currentCategory || "랜덤"
         };

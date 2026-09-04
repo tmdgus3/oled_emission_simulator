@@ -1,7 +1,7 @@
 {
-  "name": "저메추 룰렛",
-  "short_name": "저메추",
-  "description": "밥, 고기, 국물, 랜덤으로 돌리는 저녁 메뉴 룰렛",
+  "name": "what to eat",
+  "short_name": "what to eat",
+  "description": "지영이가 골라주는 오늘의 뭐먹지?",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

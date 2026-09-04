@@ -1,7 +1,7 @@
-﻿{
-  "name": "?硫붿텛 猷곕젢",
-  "short_name": "?硫붿텛",
-  "description": "諛? 怨좉린, 援?Ъ, ?쒕뜡?쇰줈 ?뚮━?????硫붾돱 猷곕젢",
+{
+  "name": "저메추 룰렛",
+  "short_name": "저메추",
+  "description": "밥, 고기, 국물, 랜덤으로 돌리는 저녁 메뉴 룰렛",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -17,4 +17,3 @@
     }
   ]
 }
-

@@ -1,13 +1,13 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f05745">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="?硫붿텛 猷곕젢">
+  <meta name="apple-mobile-web-app-title" content="저메추 룰렛">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <title>?硫붿텛 猷곕젢</title>
+  <title>저메추 룰렛</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <style>
@@ -413,15 +413,15 @@
       text-overflow: ellipsis;
     }
 
-    .category-button[data-category="諛?] { --accent: var(--rice); }
-    .category-button[data-category="怨좉린"] { --accent: var(--meat); }
-    .category-button[data-category="援?Ъ"] { --accent: var(--soup); }
-    .category-button[data-category="?쒕뜡"] { --accent: var(--random); }
+    .category-button[data-category="밥"] { --accent: var(--rice); }
+    .category-button[data-category="고기"] { --accent: var(--meat); }
+    .category-button[data-category="국물"] { --accent: var(--soup); }
+    .category-button[data-category="랜덤"] { --accent: var(--random); }
 
-    .category-pill[data-category="諛?] { background: var(--rice); }
-    .category-pill[data-category="怨좉린"] { background: var(--meat); }
-    .category-pill[data-category="援?Ъ"] { background: var(--soup); }
-    .category-pill[data-category="?쒕뜡"] { background: var(--random); }
+    .category-pill[data-category="밥"] { background: var(--rice); }
+    .category-pill[data-category="고기"] { background: var(--meat); }
+    .category-pill[data-category="국물"] { background: var(--soup); }
+    .category-pill[data-category="랜덤"] { background: var(--random); }
 
     dialog {
       width: min(100% - 24px, 640px);
@@ -593,11 +593,11 @@
           </svg>
         </div>
         <div class="title">
-          <h1>?硫붿텛 猷곕젢</h1>
-          <div class="subtitle" id="menuCount">硫붾돱 怨꾩궛 以?/div>
+          <h1>저메추 룰렛</h1>
+          <div class="subtitle" id="menuCount">메뉴 계산 중</div>
         </div>
       </div>
-      <button class="icon-button" id="openEditor" type="button" aria-label="硫붾돱 ?몄쭛">
+      <button class="icon-button" id="openEditor" type="button" aria-label="메뉴 편집">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 20h9"></path>
           <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
@@ -607,27 +607,27 @@
 
     <section class="machine" aria-live="polite">
       <div class="status-strip">
-        <div class="category-pill" id="categoryPill" data-category="諛?>諛?/div>
+        <div class="category-pill" id="categoryPill" data-category="밥">밥</div>
         <div class="result-id" id="resultId">BAP-001</div>
       </div>
 
       <div class="slot-area" id="slotArea">
         <div class="slot-window">
-          <div class="slot-label" id="slotLabel">?ㅻ뒛 ???/div>
-          <div class="dish" id="dishName">源移섎낭?뚮갈</div>
-          <div class="note" id="dishNote">怨꾨??꾨씪???щ━硫?諛붾줈 ?꾩꽦</div>
+          <div class="slot-label" id="slotLabel">오늘 저녁</div>
+          <div class="dish" id="dishName">김치볶음밥</div>
+          <div class="note" id="dishNote">계란후라이 올리면 바로 완성</div>
         </div>
       </div>
 
       <div class="actions">
-        <button class="minor-button" id="copyResult" type="button">寃곌낵 蹂듭궗</button>
-        <button class="minor-button" id="spinAgain" type="button">??踰???/button>
+        <button class="minor-button" id="copyResult" type="button">결과 복사</button>
+        <button class="minor-button" id="spinAgain" type="button">한 번 더</button>
       </div>
     </section>
 
     <footer>
-      <nav class="category-grid" aria-label="硫붾돱 移댄뀒怨좊━">
-        <button class="category-button" type="button" data-category="諛?>
+      <nav class="category-grid" aria-label="메뉴 카테고리">
+        <button class="category-button" type="button" data-category="밥">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M4 11c0 5 3.5 9 8 9s8-4 8-9Z"></path>
             <path d="M7 11c1.2-1.6 2.9-2.4 5-2.4s3.8.8 5 2.4"></path>
@@ -635,18 +635,18 @@
             <path d="M13 7V3"></path>
             <path d="M17 7V4"></path>
           </svg>
-          <span>諛?/span>
+          <span>밥</span>
         </button>
-        <button class="category-button" type="button" data-category="怨좉린">
+        <button class="category-button" type="button" data-category="고기">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M7.5 14.5C4.7 11.7 4.2 8 6.4 5.8s5.9-1.7 8.7 1.1 3.3 6.5 1.1 8.7-5.9 1.7-8.7-1.1Z"></path>
             <path d="M15.3 15.1 20 20"></path>
             <path d="M18.2 19.8c.9.4 1.8.2 2.3-.3s.7-1.4.3-2.3"></path>
             <path d="M9.2 8.6h.01"></path>
           </svg>
-          <span>怨좉린</span>
+          <span>고기</span>
         </button>
-        <button class="category-button" type="button" data-category="援?Ъ">
+        <button class="category-button" type="button" data-category="국물">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M5 12h14l-1.1 6.2A3.4 3.4 0 0 1 14.5 21h-5a3.4 3.4 0 0 1-3.4-2.8Z"></path>
             <path d="M7 12c.5-1.8 2.2-3 5-3s4.5 1.2 5 3"></path>
@@ -654,9 +654,9 @@
             <path d="M13 3.6c-.8 1-.8 2 0 3"></path>
             <path d="M17 5c-.7.8-.7 1.5 0 2.3"></path>
           </svg>
-          <span>援?Ъ</span>
+          <span>국물</span>
         </button>
-        <button class="category-button" type="button" data-category="?쒕뜡">
+        <button class="category-button" type="button" data-category="랜덤">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M16 3h5v5"></path>
             <path d="M4 20 21 3"></path>
@@ -664,18 +664,18 @@
             <path d="M15 15 21 21"></path>
             <path d="M4 4l5.5 5.5"></path>
           </svg>
-          <span>?쒕뜡</span>
+          <span>랜덤</span>
         </button>
       </nav>
-      <div class="history" id="history" aria-label="理쒓렐 寃곌낵"></div>
+      <div class="history" id="history" aria-label="최근 결과"></div>
     </footer>
   </main>
 
   <dialog id="editorDialog">
     <form class="editor" method="dialog">
       <div class="editor-head">
-        <h2 class="editor-title">硫붾돱 ?몄쭛</h2>
-        <button class="icon-button" id="closeEditor" value="cancel" type="submit" aria-label="?リ린">
+        <h2 class="editor-title">메뉴 편집</h2>
+        <button class="icon-button" id="closeEditor" value="cancel" type="submit" aria-label="닫기">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M18 6 6 18"></path>
             <path d="M6 6l12 12"></path>
@@ -684,21 +684,21 @@
       </div>
       <div class="editor-body">
         <div class="edit-group">
-          <label for="editRice">諛?/label>
+          <label for="editRice">밥</label>
           <textarea id="editRice" spellcheck="false"></textarea>
         </div>
         <div class="edit-group">
-          <label for="editMeat">怨좉린</label>
+          <label for="editMeat">고기</label>
           <textarea id="editMeat" spellcheck="false"></textarea>
         </div>
         <div class="edit-group">
-          <label for="editSoup">援?Ъ</label>
+          <label for="editSoup">국물</label>
           <textarea id="editSoup" spellcheck="false"></textarea>
         </div>
       </div>
       <div class="editor-actions">
-        <button class="minor-button" id="resetMenus" type="button">珥덇린??/button>
-        <button class="minor-button" id="saveMenus" value="default" type="submit">???/button>
+        <button class="minor-button" id="resetMenus" type="button">초기화</button>
+        <button class="minor-button" id="saveMenus" value="default" type="submit">저장</button>
       </div>
     </form>
   </dialog>
@@ -710,170 +710,170 @@
     const HISTORY_KEY = "jemechu-roulette-history-v1";
 
     const DEFAULT_MENUS = {
-      "諛?: [
-        ["源移섎낭?뚮갈", "怨꾨??꾨씪???щ━硫?諛붾줈 ?꾩꽦"],
-        ["?쒖쑁??갈", "留ㅼ숴?섍퀬 ?ㅽ뙣 ?뺣쪧 ??쓬"],
-        ["?ㅻ??쇱씠??, "耳泥⑹쑝濡?留덉묠??],
-        ["移대젅?쇱씠??, "?됱옣怨??쇱콈 泥섎━源뚯? 媛??],
-        ["吏쒖옣諛?, "硫대낫??諛μ씠 ?밴린????],
-        ["?뚭퀬湲곕뜮諛?, "洹쒕룞 ?먮굦?쇰줈 媛蹂띻쾶"],
-        ["留덊뙆?먮???갈", "?쇱뼹??諛λ룄??],
-        ["?ㅽ뙵留덉슂??갈", "媛꾨떒?섏?留?媛뺣젰??],
-        ["李몄튂留덉슂??갈", "?몄쓽??媛먯꽦 ?낃렇?덉씠??],
-        ["?숈???갈", "留ㅼ슫留쏆쑝濡?由ъ뀑"],
-        ["?ㅼ쭠?대뜮諛?, "遺덊뼢 ?섎㈃ ??醫뗭쓬"],
-        ["?덉슦蹂띠쓬諛?, "?뚭린由??대㈃ ?밸쪧 ?곸듅"],
-        ["怨꾨?蹂띠쓬諛?, "?쒖씪 ?⑥닚???뺣떟"],
-        ["源띾몢湲곕낭?뚮갈", "援?갈吏?留쏆씠 ?섎뒗 ?좏깮"],
-        ["?뚮갈", "?≫넚 ?뱁엳???щ?"],
-        ["鍮꾨퉼諛?, "?쇱콈 留롮? 泥?媛??],
-        ["?뚯넡鍮꾨퉼諛?, "?꾨＝吏源뚯? 梨숆?"],
-        ["源諛?, "?쇰㈃?대옉 遺숈씠硫??꾩쟾泥?],
-        ["異⑸Т源諛?, "?ㅼ쭠?대Т移⑥씠 ?듭떖"],
-        ["?좊?珥덈갈", "?묎쾶 癒밴퀬 ?띠쓣 ??],
-        ["珥덈갈", "湲곕텇 醫뗭? ?몄떇 移대뱶"],
-        ["?곗뼱??갈", "??щ퉬 ?댁쭩"],
-        ["?뚮뜮諛?, "?덉숴留ㅼ숴?섍쾶"],
-        ["?ъ?", "媛蹂띻퀬 ?됯컧 醫뗭? ????],
-        ["?먮윭?쒕낵", "?쒕젅?깆씠 蹂몄껜"],
-        ["由ъ“??, "?щ┝?대굹 ?좊쭏?좊줈"],
-        ["濡쒖젣?뚯뒪?", "臾대궃??諛곕떖 媛뺤옄"],
-        ["?뚮━?ㅼ삱由ъ삤", "留덈뒛 留롮씠"],
-        ["?좊쭏?좏뙆?ㅽ?", "?곹겮???덉쟾??],
-        ["?щ┝?뚯뒪?", "袁몃뜒?????],
-        ["?쇱옄??, "移섏쫰媛 ?꾩슂????],
-        ["?쇱옄", "諛섎컲 議고빀 異붿쿇"],
-        ["?꾨쾭嫄?, "媛먰?源뚯? 媛硫??됰났"],
-        ["?肄?, "?먯뿉 ?ㅺ퀬 癒밸뒗 ???],
-        ["遺由щ삉", "諛κ퉴吏 ?ㅼ뼱媛??좊뱺??],
-        ["?援?닔", "援?Ъ???덉?留?諛?移댄뀒怨좊━ 媛먯꽦"],
-        ["?잜???, "?덉숴?ъ숴??硫??좏깮"],
-        ["遺꾩쭨", "媛蹂띻쾶 ?됰떎瑜?留?],
-        ["?뚮뱶?꾩튂", "??? ??곸뿉 醫뗭쓬"],
-        ["?좎뒪??, "媛꾨떒?섍퀬 ?곕쑜??],
-        ["?〓낭??, "?源 異붽??섎㈃ ????몄젙"],
-        ["?쇰낭??, "?꾩닔?붾Ъ ??낆?"],
-        ["?곕룞", "遺???곸? 硫???洹몃쫯"],
-        ["硫붾??뚮컮", "?쒖썝?섍쾶 ?뺣━"],
-        ["?됰㈃", "臾쇰깋 鍮꾨깋 怨좊?遺??],
-        ["肄⑷뎅??, "怨꾩젅 留욎쑝硫?媛뺣젰??],
-        ["移쇨뎅??, "源移섍? 留쏆엳?댁빞 ??],
-        ["?섏젣鍮?, "已꾧퉫??吏묐갈 ?먮굦"],
-        ["留뚮몢", "李먮쭔??援곕쭔??諛섎컲"],
-        ["鍮꾨퉼援?닔", "留ㅼ숴?덉숴 鍮좊Ⅸ ?좏깮"]
+      "밥": [
+        ["김치볶음밥", "계란후라이 올리면 바로 완성"],
+        ["제육덮밥", "매콤하고 실패 확률 낮음"],
+        ["오므라이스", "케첩으로 마침표"],
+        ["카레라이스", "냉장고 야채 처리까지 가능"],
+        ["짜장밥", "면보다 밥이 당기는 날"],
+        ["소고기덮밥", "규동 느낌으로 가볍게"],
+        ["마파두부덮밥", "얼얼한 밥도둑"],
+        ["스팸마요덮밥", "간단하지만 강력함"],
+        ["참치마요덮밥", "편의점 감성 업그레이드"],
+        ["낙지덮밥", "매운맛으로 리셋"],
+        ["오징어덮밥", "불향 나면 더 좋음"],
+        ["새우볶음밥", "파기름 내면 승률 상승"],
+        ["계란볶음밥", "제일 단순한 정답"],
+        ["깍두기볶음밥", "국밥집 맛이 나는 선택"],
+        ["알밥", "톡톡 씹히는 재미"],
+        ["비빔밥", "야채 많은 척 가능"],
+        ["돌솥비빔밥", "누룽지까지 챙김"],
+        ["김밥", "라면이랑 붙이면 완전체"],
+        ["충무김밥", "오징어무침이 핵심"],
+        ["유부초밥", "작게 먹고 싶을 때"],
+        ["초밥", "기분 좋은 외식 카드"],
+        ["연어덮밥", "와사비 살짝"],
+        ["회덮밥", "새콤매콤하게"],
+        ["포케", "가볍고 색감 좋은 한 끼"],
+        ["샐러드볼", "드레싱이 본체"],
+        ["리조또", "크림이나 토마토로"],
+        ["로제파스타", "무난한 배달 강자"],
+        ["알리오올리오", "마늘 많이"],
+        ["토마토파스타", "상큼한 안전픽"],
+        ["크림파스타", "꾸덕한 저녁"],
+        ["라자냐", "치즈가 필요한 날"],
+        ["피자", "반반 조합 추천"],
+        ["햄버거", "감튀까지 가면 행복"],
+        ["타코", "손에 들고 먹는 저녁"],
+        ["부리또", "밥까지 들어간 든든함"],
+        ["쌀국수", "국물이 있지만 밥 카테고리 감성"],
+        ["팟타이", "새콤달콤한 면 선택"],
+        ["분짜", "가볍게 색다른 맛"],
+        ["샌드위치", "늦은 저녁에 좋음"],
+        ["토스트", "간단하고 따뜻함"],
+        ["떡볶이", "튀김 추가하면 저녁 인정"],
+        ["라볶이", "탄수화물 풀악셀"],
+        ["우동", "부담 적은 면 한 그릇"],
+        ["메밀소바", "시원하게 정리"],
+        ["냉면", "물냉 비냉 고민부터"],
+        ["콩국수", "계절 맞으면 강력함"],
+        ["칼국수", "김치가 맛있어야 함"],
+        ["수제비", "쫄깃한 집밥 느낌"],
+        ["만두", "찐만두 군만두 반반"],
+        ["비빔국수", "매콤새콤 빠른 선택"]
       ],
-      "怨좉린": [
-        ["援쎈꽕 ?ㅻ━吏??, "?대갚??援ъ슫 移섑궓"],
-        ["援쎈꽕 怨좎텛諛붿궗??, "留ㅼ숴諛붿궘 ???二쇱옄"],
-        ["援쎈꽕 蹂쇱??대끂", "遺덈쭧 ?뚯뒪媛 ?밴만 ??],
-        ["BHC 肉뚮쭅??, "?⑥쭬 移섏쫰媛猷??대옒??],
-        ["BHC 留쏆큹??, "媛꾩옣 ?뚯뒪 怨꾩뿴"],
-        ["BBQ ?⑷툑?щ━釉?, "?꾨씪?대뱶 ?뺤꽍"],
-        ["BBQ ?먮찓?댁뭅 ?듬떎由?, "?묐뀗 吏꾪븳 ??떎由?],
-        ["援먯큿 ?덈땲肄ㅻ낫", "?щ떖吏?ℓ???덉쟾??],
-        ["援먯큿 ?덈뱶肄ㅻ낫", "留ㅼ슫 媛꾩옣 移섑궓"],
-        ["?ㅻ꽕移섑궓 ?ㅻ끂?숈튂利?, "媛猷?移섑궓???밴린????],
-        ["?ㅻ꽕移섑궓 ?뚮떗", "?뚯콈濡??곕쑜?섍쾶"],
-        ["泥섍컭吏??덊봽由쇱뼇??, "?ъ숴???묐뀗 媛뺤옄"],
-        ["泥섍컭吏??묐뀗移섑궓", "?묐뀗移섑궓 湲곕낯湲?],
-        ["?몃씪??釉붾옓?뚮━??, "留덈뒛媛꾩옣 怨좉툒吏?留?],
-        ["?몃씪??怨좎텛留덉슂", "留ㅼ숴怨좎냼??議고빀"],
-        ["60怨??몃옉?댁튂??, "吏?ℓ留ㅼ숴???먭레"],
-        ["硫뺤떆移대굹 ?≪큹移섑궓", "留ㅼ슫留??뺤떎??],
-        ["?몃옉?듬떗 ?뚯떥??留덈뒛移섑궓", "留덈뒛 ?뚯뒪 ?щ퓤"],
-        ["?섎━移대굹 ?묐뀗移섑궓", "?쏅궇 ?묐뀗 媛먯꽦"],
-        ["?몄떇?대몢留덈━移섑궓 留ㅼ슫媛꾩옣", "??留덈━ 媛?깅퉬"],
-        ["?먮떞移섑궓 留듭뒓??, "留ㅼ슫 移섑궓 ?꾨낫"],
-        ["?먮옒?ㅻ옒 媛덈┃諛섑빂?묐뀗諛?, "諛섎컲?쇰줈 ???],
-        ["吏肄붾컮 ??텋?묐뀗移섑궓", "移섎갈源뚯? 媛??],
-        ["?숆렐????텋?먮쭏由ъ튂??, "??텋 ?묐뀗?쇰줈 ?좊뱺?섍쾶"],
-        ["袁몃툕?쇨섕 ??텋?먮쭏由ъ튂??, "援ъ슫 移섑궓 履??좏깮"],
-        ["?ㅻ툙留덈（ 濡쒖뒪?몄튂??, "?대갚???ㅻ툙 移섑궓"],
-        ["?쇨껸??, "吏묒씠??媛寃뚮뱺 ?뺤떎??],
-        ["紐⑹궡援ъ씠", "湲곕쫫湲??곷떦???좏깮"],
-        ["??젙??, "已꾧퉫怨좎냼???뱀닔遺??],
-        ["媛덈ℓ湲곗궡", "?뚭툑援ъ씠濡?醫뗭쓬"],
-        ["?쇱?媛덈퉬", "?щ떖???묐뀗 怨좉린"],
-        ["?뚭컝鍮꾩궡", "湲곕텇 ?대뒗 怨좉린"],
-        ["LA媛덈퉬", "諛μ씠????留욎쓬"],
-        ["李⑤룎諛뺤씠", "鍮⑤━ ?듭뼱??醫뗭쓬"],
-        ["遺덇퀬湲?, "?щ떖??吏묐갈 怨좉린"],
-        ["??컝鍮?, "蹂띠쓬諛κ퉴吏 ?덉젙??],
-        ["?ㅻ━怨좉린", "?덉젣??濡쒖뒪??醫뗭쓬"],
-        ["議깅컻", "留됯뎅??遺숈씠硫??꾩꽦"],
-        ["蹂댁뙂", "源移섍? ?밸?泥?],
-        ["?섏쑁", "?대갚?섍쾶 癒밸뒗 怨좉린"],
-        ["怨깆갹", "?먮겮?④낵 怨좎냼???ъ씠"],
-        ["?李?, "媛뺥븳 ?좏깮"],
-        ["留됱갹", "?뚯뒪 李띿뼱 癒밸뒗 留?],
-        ["?묎섕移?, "易붾? ?꾩닔"],
-        ["?ㅽ뀒?댄겕", "?ㅻ뒛? 移쇱쭏"],
-        ["?덉뭅痢?, "?깆떖 ?덉떖 怨좊?"],
-        ["移섏쫰?덉뭅痢?, "彛??섏뼱?섎뒗 移섏쫰"],
-        ["媛痢좊룞", "?덉뭅痢좎? 諛μ쓽 以묎컙吏?"],
-        ["?⑤컯?ㅽ뀒?댄겕", "?뚯뒪? 怨꾨? 議고빀"],
-        ["誘명듃蹂??좊쭏?좏뙆?ㅽ?", "怨좉린 ?ㅼ뼱媛??뚯뒪?"]
+      "고기": [
+        ["굽네 오리지널", "담백한 구운 치킨"],
+        ["굽네 고추바사삭", "매콤바삭 대표 주자"],
+        ["굽네 볼케이노", "불맛 소스가 당길 때"],
+        ["BHC 뿌링클", "단짠 치즈가루 클래식"],
+        ["BHC 맛초킹", "간장 소스 계열"],
+        ["BBQ 황금올리브", "후라이드 정석"],
+        ["BBQ 자메이카 통다리", "양념 진한 닭다리"],
+        ["교촌 허니콤보", "달달짭짤한 안전픽"],
+        ["교촌 레드콤보", "매운 간장 치킨"],
+        ["네네치킨 스노윙치즈", "가루 치킨이 당기는 날"],
+        ["네네치킨 파닭", "파채로 산뜻하게"],
+        ["처갓집 슈프림양념", "달콤한 양념 강자"],
+        ["처갓집 양념치킨", "양념치킨 기본기"],
+        ["푸라닭 블랙알리오", "마늘간장 고급진 맛"],
+        ["푸라닭 고추마요", "매콤고소한 조합"],
+        ["60계 호랑이치킨", "짭짤매콤한 자극"],
+        ["멕시카나 땡초치킨", "매운맛 확실함"],
+        ["노랑통닭 알싸한 마늘치킨", "마늘 소스 듬뿍"],
+        ["페리카나 양념치킨", "옛날 양념 감성"],
+        ["호식이두마리치킨 매운간장", "두 마리 가성비"],
+        ["자담치킨 맵슐랭", "매운 치킨 후보"],
+        ["또래오래 갈릭반핫양념반", "반반으로 타협"],
+        ["지코바 숯불양념치킨", "치밥까지 가능"],
+        ["동근이 숯불두마리치킨", "숯불 양념으로 든든하게"],
+        ["꾸브라꼬 숯불두마리치킨", "구운 치킨 쪽 선택"],
+        ["오븐마루 로스트치킨", "담백한 오븐 치킨"],
+        ["삼겹살", "집이든 가게든 확실함"],
+        ["목살구이", "기름기 적당한 선택"],
+        ["항정살", "쫄깃고소한 특수부위"],
+        ["갈매기살", "소금구이로 좋음"],
+        ["돼지갈비", "달달한 양념 고기"],
+        ["소갈비살", "기분 내는 고기"],
+        ["LA갈비", "밥이랑 잘 맞음"],
+        ["차돌박이", "빨리 익어서 좋음"],
+        ["불고기", "달달한 집밥 고기"],
+        ["닭갈비", "볶음밥까지 예정됨"],
+        ["오리고기", "훈제도 로스도 좋음"],
+        ["족발", "막국수 붙이면 완성"],
+        ["보쌈", "김치가 승부처"],
+        ["수육", "담백하게 먹는 고기"],
+        ["곱창", "느끼함과 고소함 사이"],
+        ["대창", "강한 선택"],
+        ["막창", "소스 찍어 먹는 맛"],
+        ["양꼬치", "쯔란 필수"],
+        ["스테이크", "오늘은 칼질"],
+        ["돈카츠", "등심 안심 고민"],
+        ["치즈돈카츠", "쭉 늘어나는 치즈"],
+        ["가츠동", "돈카츠와 밥의 중간지대"],
+        ["함박스테이크", "소스와 계란 조합"],
+        ["미트볼 토마토파스타", "고기 들어간 파스타"]
       ],
-      "援?Ъ": [
-        ["遺?李뚭컻", "?쇰㈃?щ━ ?ｌ쑝硫???],
-        ["?ㅻ럢??, "?⑤걟?섍퀬 媛踰쇱슫 援?Ъ"],
-        ["源移섏컡媛?, "?쇱?怨좉린 留롮씠"],
-        ["?쒖옣李뚭컻", "諛μ씠???쒖씪 ?덉젙??],
-        ["?쒕몢遺李뚭컻", "怨꾨? ??],
-        ["泥?뎅??, "媛뺥븯吏留??좊뱺??],
-        ["媛먯옄??, "堉???뒗 ???],
-        ["堉덊빐?κ뎅", "?쇰갈??媛?ν븳 援?Ъ"],
-        ["?ㅻ쟻??, "?뚭툑 ?꾩텛濡?留덈Т由?],
-        ["怨고깢", "留묎퀬 ?좊뱺???좏깮"],
-        ["媛덈퉬??, "怨좉린??援?Ъ??梨숆?"],
-        ["?↔컻??, "?쇳겙???뚭퀬湲?援?Ъ"],
-        ["?뚭퀬湲곕Т援?, "?대갚??吏묐갈 援?Ъ"],
-        ["誘몄뿭援?, "???명븳 ???],
-        ["遺곸뾿援?, "源붾걫?섍퀬 媛쒖슫??],
-        ["肄⑸굹臾쇨뎅諛?, "?④쾪寃???洹몃쫯"],
-        ["?쇱?援?갈", "遺異??щ퓤"],
-        ["?쒕?援?, "?ㅻ?湲?議곗젅"],
-        ["?댁옣??, "吏꾪븳 援?Ъ ?좏깮"],
-        ["異붿뼱??, "紐몃낫??履?],
-        ["?쇨퀎??, "????留덈━ ?좊뱺??],
-        ["??븳留덈━", "移쇨뎅?섍퉴吏 媛??],
-        ["?ㅻ툕?ㅻ툕", "?쇱콈??梨숆린??泥?],
-        ["留덈씪??, "?щ즺 怨좊Ⅴ???щ?"],
-        ["?좉텋", "留ㅼ슫??諛깊깢 諛섎컲"],
-        ["吏щ퐬", "遺덈쭧 ?섎뒗 援?Ъ硫?],
-        ["?몃㈃", "遺?쒕윭??以묒떇 援?Ъ"],
-        ["?援?닔", "?숈＜? 怨좎닔 ?좏깮"],
-        ["?쇰찘", "?덉퐫痢??쇱쑀 誘몄냼 以???],
-        ["?섍??ы궎吏щ퐬", "?섏? 援?Ъ?몃뜲 吏꾪븿"],
-        ["?곕룞?꾧낏", "遺???녿뒗 ?⑤걟??],
-        ["源移섏슦??, "移쇱뭡??硫?援?Ъ"],
-        ["移쇰쭔?먭뎅", "移쇨뎅?섏? 留뚮몢 ?숈떆 ?닿껐"],
-        ["?↔뎅", "怨꾨?吏???덉쑝硫?醫뗭쓬"],
-        ["留뚮몿援?, "?됰룞留뚮몢 援ъ썝?ъ닔"],
-        ["?섏젣鍮?, "吏꾪븳 硫몄튂?≪닔濡?],
-        ["?뚰깢", "?쇳겙?섍퀬 ?몄쭚??],
-        ["?援ы깢", "?쒖썝???앹꽑 援?Ъ"],
-        ["留ㅼ슫??, "??癒밴퀬 ???ㅼ쓬 留?],
-        ["?꾧뎄李?援?Ъ蹂띠쓬諛?, "援?Ъ?뚯쓽 蹂移??좏깮"],
-        ["議곌컻??, "媛쒖슫?섍퀬 ?쒖썝??],
-        ["?랁빀??, "媛꾨떒???ъ감 ?먮굦"],
-        ["?좊쭏?좎뒪??, "鍮듭씠????留욎쓬"],
-        ["?щ┝?ㅽ봽? 諛붽쾶??, "媛蹂띻퀬 ?곕쑜?섍쾶"],
-        ["誘쇰Ъ?덉슦??, "?쒖썝??留ㅼ슫 援?Ъ"]
+      "국물": [
+        ["부대찌개", "라면사리 넣으면 끝"],
+        ["오뎅탕", "뜨끈하고 가벼운 국물"],
+        ["김치찌개", "돼지고기 많이"],
+        ["된장찌개", "밥이랑 제일 안정적"],
+        ["순두부찌개", "계란 톡"],
+        ["청국장", "강하지만 든든함"],
+        ["감자탕", "뼈 뜯는 저녁"],
+        ["뼈해장국", "혼밥도 가능한 국물"],
+        ["설렁탕", "소금 후추로 마무리"],
+        ["곰탕", "맑고 든든한 선택"],
+        ["갈비탕", "고기도 국물도 챙김"],
+        ["육개장", "얼큰한 소고기 국물"],
+        ["소고기무국", "담백한 집밥 국물"],
+        ["미역국", "속 편한 저녁"],
+        ["북엇국", "깔끔하고 개운함"],
+        ["콩나물국밥", "뜨겁게 한 그릇"],
+        ["돼지국밥", "부추 듬뿍"],
+        ["순대국", "다대기 조절"],
+        ["내장탕", "진한 국물 선택"],
+        ["추어탕", "몸보신 쪽"],
+        ["삼계탕", "닭 한 마리 든든함"],
+        ["닭한마리", "칼국수까지 가능"],
+        ["샤브샤브", "야채도 챙기는 척"],
+        ["마라탕", "재료 고르는 재미"],
+        ["훠궈", "매운탕 백탕 반반"],
+        ["짬뽕", "불맛 나는 국물면"],
+        ["울면", "부드러운 중식 국물"],
+        ["쌀국수", "숙주와 고수 선택"],
+        ["라멘", "돈코츠 쇼유 미소 중 택"],
+        ["나가사키짬뽕", "하얀 국물인데 진함"],
+        ["우동전골", "부담 없는 뜨끈함"],
+        ["김치우동", "칼칼한 면 국물"],
+        ["칼만두국", "칼국수와 만두 동시 해결"],
+        ["떡국", "계란지단 있으면 좋음"],
+        ["만둣국", "냉동만두 구원투수"],
+        ["수제비", "진한 멸치육수로"],
+        ["알탕", "얼큰하고 푸짐함"],
+        ["대구탕", "시원한 생선 국물"],
+        ["매운탕", "회 먹고 난 다음 맛"],
+        ["아구찜 국물볶음밥", "국물파의 변칙 선택"],
+        ["조개탕", "개운하고 시원함"],
+        ["홍합탕", "간단한 포차 느낌"],
+        ["토마토스튜", "빵이랑 잘 맞음"],
+        ["크림스프와 바게트", "가볍고 따뜻하게"],
+        ["민물새우탕", "시원한 매운 국물"]
       ]
     };
 
-    const CATEGORY_ORDER = ["諛?, "怨좉린", "援?Ъ", "?쒕뜡"];
+    const CATEGORY_ORDER = ["밥", "고기", "국물", "랜덤"];
     const CATEGORY_PREFIX = {
-      "諛?: "BAP",
-      "怨좉린": "MEAT",
-      "援?Ъ": "SOUP",
-      "?쒕뜡": "RAND"
+      "밥": "BAP",
+      "고기": "MEAT",
+      "국물": "SOUP",
+      "랜덤": "RAND"
     };
 
     const state = {
       menus: loadMenus(),
-      currentCategory: "諛?,
+      currentCategory: "밥",
       currentItem: null,
       spinning: false,
       history: loadHistory()
@@ -917,9 +917,9 @@
         const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
         if (!saved) return cloneMenus(DEFAULT_MENUS);
         return {
-          "諛?: normalizeSavedList(saved["諛?], DEFAULT_MENUS["諛?]),
-          "怨좉린": normalizeSavedList(saved["怨좉린"], DEFAULT_MENUS["怨좉린"]),
-          "援?Ъ": normalizeSavedList(saved["援?Ъ"], DEFAULT_MENUS["援?Ъ"])
+          "밥": normalizeSavedList(saved["밥"], DEFAULT_MENUS["밥"]),
+          "고기": normalizeSavedList(saved["고기"], DEFAULT_MENUS["고기"]),
+          "국물": normalizeSavedList(saved["국물"], DEFAULT_MENUS["국물"])
         };
       } catch {
         return cloneMenus(DEFAULT_MENUS);
@@ -959,8 +959,8 @@
     }
 
     function getPool(category) {
-      if (category === "?쒕뜡") {
-        return ["諛?, "怨좉린", "援?Ъ"].flatMap((realCategory) =>
+      if (category === "랜덤") {
+        return ["밥", "고기", "국물"].flatMap((realCategory) =>
           state.menus[realCategory].map((item, index) => ({ ...item, category: realCategory, index }))
         );
       }
@@ -972,7 +972,7 @@
     }
 
     function getDisplayId(category, item) {
-      const prefix = category === "?쒕뜡" ? CATEGORY_PREFIX["?쒕뜡"] : CATEGORY_PREFIX[item.category];
+      const prefix = category === "랜덤" ? CATEGORY_PREFIX["랜덤"] : CATEGORY_PREFIX[item.category];
       const number = String(item.index + 1).padStart(3, "0");
       return `${prefix}-${number}`;
     }
@@ -983,7 +983,7 @@
       els.dishName.textContent = name;
     }
 
-    function renderResult(category, item, label = "?ㅻ뒛 ???) {
+    function renderResult(category, item, label = "오늘 저녁") {
       state.currentCategory = category;
       state.currentItem = item;
       els.categoryPill.dataset.category = category;
@@ -991,13 +991,13 @@
       els.resultId.textContent = getDisplayId(category, item);
       els.slotLabel.textContent = label;
       setDishText(item.name);
-      els.dishNote.textContent = item.note || `${item.category} ?꾨낫`;
+      els.dishNote.textContent = item.note || `${item.category} 후보`;
       updateMenuCount();
     }
 
     function updateMenuCount() {
-      const total = getPool("?쒕뜡").length;
-      els.menuCount.textContent = `諛?${state.menus["諛?].length} 쨌 怨좉린 ${state.menus["怨좉린"].length} 쨌 援?Ъ ${state.menus["援?Ъ"].length} 쨌 珥?${total}`;
+      const total = getPool("랜덤").length;
+      els.menuCount.textContent = `밥 ${state.menus["밥"].length} · 고기 ${state.menus["고기"].length} · 국물 ${state.menus["국물"].length} · 총 ${total}`;
     }
 
     function vibrate(pattern) {
@@ -1010,7 +1010,7 @@
       if (state.spinning) return;
       const pool = getPool(category);
       if (!pool.length) {
-        showToast("硫붾돱媛 鍮꾩뼱 ?덉뼱??);
+        showToast("메뉴가 비어 있어요");
         return;
       }
 
@@ -1021,7 +1021,7 @@
       state.spinning = true;
       setControlsDisabled(true);
       els.slotArea.classList.add("spinning");
-      els.slotLabel.textContent = "?뚯븘媛??以?;
+      els.slotLabel.textContent = "돌아가는 중";
       vibrate(16);
 
       function frame(now) {
@@ -1031,7 +1031,7 @@
 
         if (now - lastTick > delay) {
           const item = randomFrom(pool);
-          renderResult(category, item, progress > .72 ? "?ъ뒳 硫덉텛??以? : "?뚯븘媛??以?);
+          renderResult(category, item, progress > .72 ? "슬슬 멈추는 중" : "돌아가는 중");
           lastTick = now;
         }
 
@@ -1042,7 +1042,7 @@
 
         state.spinning = false;
         els.slotArea.classList.remove("spinning");
-        renderResult(category, target, "?뱀꺼");
+        renderResult(category, target, "당첨");
         addHistory(category, target);
         setControlsDisabled(false);
         burstSparks();
@@ -1078,7 +1078,7 @@
         const button = document.createElement("button");
         button.type = "button";
         button.className = "history-item";
-        button.setAttribute("aria-label", `${item.name} ?ㅼ떆 蹂닿린`);
+        button.setAttribute("aria-label", `${item.name} 다시 보기`);
         button.innerHTML = `<span class="history-dot" aria-hidden="true"></span><span class="history-name"></span>`;
         button.querySelector(".history-name").textContent = item.name;
         button.style.color = getCategoryColor(item.realCategory || item.category);
@@ -1088,16 +1088,16 @@
             name: item.name,
             note: item.note,
             index: Number.isFinite(item.index) ? item.index : 0
-          }, "理쒓렐 寃곌낵");
+          }, "최근 결과");
         });
         els.history.appendChild(button);
       });
     }
 
     function getCategoryColor(category) {
-      if (category === "怨좉린") return "var(--meat)";
-      if (category === "援?Ъ") return "var(--soup)";
-      if (category === "?쒕뜡") return "var(--random)";
+      if (category === "고기") return "var(--meat)";
+      if (category === "국물") return "var(--soup)";
+      if (category === "랜덤") return "var(--random)";
       return "var(--rice)";
     }
 
@@ -1122,7 +1122,7 @@
       const text = `[${state.currentCategory}] ${state.currentItem.name} - ${state.currentItem.note}`;
       try {
         await navigator.clipboard.writeText(text);
-        showToast("蹂듭궗?덉뼱??);
+        showToast("복사했어요");
       } catch {
         showToast(text);
       }
@@ -1156,46 +1156,46 @@
         .filter((item) => item.name)
         .map((item) => ({
           name: item.name,
-          note: item.note || `${fallbackCategory} ?꾨낫`
+          note: item.note || `${fallbackCategory} 후보`
         }));
       return parsed.length ? parsed : cloneMenus({ [fallbackCategory]: DEFAULT_MENUS[fallbackCategory] })[fallbackCategory];
     }
 
     function openEditor() {
-      els.editRice.value = listToText(state.menus["諛?]);
-      els.editMeat.value = listToText(state.menus["怨좉린"]);
-      els.editSoup.value = listToText(state.menus["援?Ъ"]);
+      els.editRice.value = listToText(state.menus["밥"]);
+      els.editMeat.value = listToText(state.menus["고기"]);
+      els.editSoup.value = listToText(state.menus["국물"]);
       if (typeof els.editorDialog.showModal === "function") {
         els.editorDialog.showModal();
       } else {
-        showToast("??釉뚮씪?곗????몄쭛 李쎌쓣 吏?먰븯吏 ?딆븘??);
+        showToast("이 브라우저는 편집 창을 지원하지 않아요");
       }
     }
 
     function saveEditor() {
-      state.menus["諛?] = textToList(els.editRice.value, "諛?);
-      state.menus["怨좉린"] = textToList(els.editMeat.value, "怨좉린");
-      state.menus["援?Ъ"] = textToList(els.editSoup.value, "援?Ъ");
+      state.menus["밥"] = textToList(els.editRice.value, "밥");
+      state.menus["고기"] = textToList(els.editMeat.value, "고기");
+      state.menus["국물"] = textToList(els.editSoup.value, "국물");
       saveMenusToStorage();
       updateMenuCount();
-      showToast("??ν뻽?댁슂");
+      showToast("저장했어요");
     }
 
     function resetMenus() {
       state.menus = cloneMenus(DEFAULT_MENUS);
       saveMenusToStorage();
-      els.editRice.value = listToText(state.menus["諛?]);
-      els.editMeat.value = listToText(state.menus["怨좉린"]);
-      els.editSoup.value = listToText(state.menus["援?Ъ"]);
+      els.editRice.value = listToText(state.menus["밥"]);
+      els.editMeat.value = listToText(state.menus["고기"]);
+      els.editSoup.value = listToText(state.menus["국물"]);
       updateMenuCount();
-      showToast("湲곕낯 硫붾돱濡?諛붽엥?댁슂");
+      showToast("기본 메뉴로 바꿨어요");
     }
 
     function attachEvents() {
       $$(".category-button").forEach((button) => {
         button.addEventListener("click", () => spin(button.dataset.category));
       });
-      els.spinAgain.addEventListener("click", () => spin(state.currentCategory || "?쒕뜡"));
+      els.spinAgain.addEventListener("click", () => spin(state.currentCategory || "랜덤"));
       els.copyResult.addEventListener("click", copyResult);
       els.openEditor.addEventListener("click", openEditor);
       els.saveMenus.addEventListener("click", saveEditor);
@@ -1203,12 +1203,12 @@
       document.addEventListener("keydown", (event) => {
         if (event.repeat || state.spinning || els.editorDialog.open) return;
         const map = {
-          "1": "諛?,
-          "2": "怨좉린",
-          "3": "援?Ъ",
-          "4": "?쒕뜡",
-          "Enter": state.currentCategory || "?쒕뜡",
-          " ": state.currentCategory || "?쒕뜡"
+          "1": "밥",
+          "2": "고기",
+          "3": "국물",
+          "4": "랜덤",
+          "Enter": state.currentCategory || "랜덤",
+          " ": state.currentCategory || "랜덤"
         };
         if (map[event.key]) {
           event.preventDefault();
@@ -1226,7 +1226,7 @@
     function init() {
       attachEvents();
       renderHistory();
-      renderResult("諛?, { ...state.menus["諛?][0], category: "諛?, index: 0 }, "?ㅻ뒛 ???);
+      renderResult("밥", { ...state.menus["밥"][0], category: "밥", index: 0 }, "오늘 저녁");
       registerServiceWorker();
     }
 
@@ -1234,4 +1234,3 @@
   </script>
 </body>
 </html>
-

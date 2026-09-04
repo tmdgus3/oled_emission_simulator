@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = "jemechu-roulette-v1";
+const CACHE_NAME = "jemechu-roulette-v2";
 const ASSETS = [
   "./index.html",
   "./manifest.webmanifest",
@@ -30,4 +30,3 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
-

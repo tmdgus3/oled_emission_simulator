@@ -1,0 +1,1237 @@
+﻿<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f05745">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="?硫붿텛 猷곕젢">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>?硫붿텛 猷곕젢</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --bg: #f6f7f4;
+      --ink: #151515;
+      --muted: #62645f;
+      --line: #d9ddd2;
+      --panel: #ffffff;
+      --rice: #009a8d;
+      --meat: #f05745;
+      --soup: #4f9d69;
+      --random: #222222;
+      --gold: #f2c84b;
+      --shadow: 0 18px 50px rgba(21, 21, 21, .13);
+      color-scheme: light;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      letter-spacing: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+    }
+
+    body {
+      min-height: 100%;
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(240, 87, 69, .10), transparent 34%),
+        linear-gradient(315deg, rgba(0, 154, 141, .12), transparent 38%),
+        var(--bg);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: .7;
+    }
+
+    .app {
+      width: min(100%, 720px);
+      min-height: 100svh;
+      margin: 0 auto;
+      padding: max(18px, env(safe-area-inset-top)) 16px max(22px, env(safe-area-inset-bottom));
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 14px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--ink);
+      border: 3px solid #fff;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(21, 21, 21, .18);
+      flex: 0 0 auto;
+    }
+
+    .brand-mark svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .title {
+      min-width: 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.35rem;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .icon-button {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, .82);
+      box-shadow: 0 8px 20px rgba(21, 21, 21, .07);
+    }
+
+    .icon-button svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+    }
+
+    .machine {
+      align-self: stretch;
+      display: grid;
+      grid-template-rows: auto minmax(270px, 1fr) auto;
+      gap: 12px;
+      border: 1px solid rgba(21, 21, 21, .08);
+      border-radius: 8px;
+      padding: 14px;
+      background: rgba(255, 255, 255, .88);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .status-strip {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      min-height: 36px;
+    }
+
+    .category-pill {
+      justify-self: start;
+      display: inline-flex;
+      align-items: center;
+      min-width: 82px;
+      max-width: 100%;
+      height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--rice);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .result-id {
+      color: var(--muted);
+      font-size: .86rem;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .slot-area {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 270px;
+      border-radius: 8px;
+      padding: 18px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .98), rgba(255, 255, 255, .86)),
+        radial-gradient(circle at 50% 0%, rgba(242, 200, 75, .28), transparent 45%);
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .slot-area::before,
+    .slot-area::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .slot-area::before {
+      background:
+        repeating-linear-gradient(90deg, rgba(21, 21, 21, .05) 0 1px, transparent 1px 16px),
+        repeating-linear-gradient(0deg, rgba(21, 21, 21, .04) 0 1px, transparent 1px 18px);
+      opacity: .45;
+    }
+
+    .slot-area::after {
+      border: 10px solid rgba(21, 21, 21, .06);
+      border-radius: 8px;
+    }
+
+    .slot-window {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      min-height: 210px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      align-items: center;
+      justify-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .slot-label {
+      min-height: 28px;
+      padding: 4px 10px;
+      border: 1px solid rgba(21, 21, 21, .10);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, .72);
+      font-size: .9rem;
+      font-weight: 750;
+    }
+
+    .dish {
+      width: 100%;
+      min-height: 112px;
+      display: grid;
+      place-items: center;
+      padding: 10px 4px;
+      font-size: 3.1rem;
+      line-height: 1.08;
+      font-weight: 950;
+      letter-spacing: 0;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+      text-wrap: balance;
+    }
+
+    .dish.is-long {
+      font-size: 2.35rem;
+    }
+
+    .dish.is-extra-long {
+      font-size: 1.85rem;
+    }
+
+    .note {
+      min-height: 24px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.35;
+      word-break: keep-all;
+    }
+
+    .spinning .dish {
+      filter: blur(.8px);
+      transform: translateY(-1px);
+    }
+
+    .spinning .slot-label {
+      color: var(--ink);
+      border-color: rgba(21, 21, 21, .24);
+    }
+
+    .spark {
+      position: absolute;
+      z-index: 2;
+      width: 9px;
+      height: 9px;
+      border-radius: 2px;
+      background: var(--gold);
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(.4);
+      animation: pop .72s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes pop {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(.3) rotate(0deg); }
+      22% { opacity: 1; }
+      100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(1) rotate(95deg); }
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .minor-button {
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: #fff;
+      font-weight: 800;
+    }
+
+    .history {
+      min-height: 42px;
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      padding: 2px 0 4px;
+      scrollbar-width: none;
+    }
+
+    .history::-webkit-scrollbar {
+      display: none;
+    }
+
+    .history-item {
+      flex: 0 0 auto;
+      max-width: 190px;
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .78);
+      color: var(--ink);
+      font-size: .86rem;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .history-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      flex: 0 0 auto;
+      background: currentColor;
+    }
+
+    .history-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .category-button {
+      min-width: 0;
+      min-height: 76px;
+      display: grid;
+      grid-template-rows: 24px auto;
+      align-items: center;
+      justify-items: center;
+      gap: 4px;
+      padding: 10px 8px;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 10px 22px rgba(21, 21, 21, .13);
+      transition: transform .14s ease, box-shadow .14s ease;
+      touch-action: manipulation;
+    }
+
+    .category-button:active {
+      transform: translateY(1px) scale(.99);
+      box-shadow: 0 5px 14px rgba(21, 21, 21, .14);
+    }
+
+    .category-button svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .category-button span {
+      min-width: 0;
+      max-width: 100%;
+      font-size: 1rem;
+      font-weight: 950;
+      line-height: 1.05;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .category-button[data-category="諛?] { --accent: var(--rice); }
+    .category-button[data-category="怨좉린"] { --accent: var(--meat); }
+    .category-button[data-category="援?Ъ"] { --accent: var(--soup); }
+    .category-button[data-category="?쒕뜡"] { --accent: var(--random); }
+
+    .category-pill[data-category="諛?] { background: var(--rice); }
+    .category-pill[data-category="怨좉린"] { background: var(--meat); }
+    .category-pill[data-category="援?Ъ"] { background: var(--soup); }
+    .category-pill[data-category="?쒕뜡"] { background: var(--random); }
+
+    dialog {
+      width: min(100% - 24px, 640px);
+      max-height: min(720px, 92svh);
+      padding: 0;
+      border: 0;
+      border-radius: 8px;
+      color: var(--ink);
+      background: var(--panel);
+      box-shadow: 0 26px 90px rgba(21, 21, 21, .28);
+    }
+
+    dialog::backdrop {
+      background: rgba(21, 21, 21, .45);
+      backdrop-filter: blur(4px);
+    }
+
+    .editor {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      max-height: min(720px, 92svh);
+    }
+
+    .editor-head,
+    .editor-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .editor-actions {
+      border-top: 1px solid var(--line);
+      border-bottom: 0;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .editor-title {
+      margin: 0;
+      font-size: 1.12rem;
+      line-height: 1.2;
+    }
+
+    .editor-body {
+      overflow: auto;
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .edit-group {
+      display: grid;
+      gap: 6px;
+    }
+
+    .edit-group label {
+      font-weight: 900;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 130px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 11px;
+      color: var(--ink);
+      background: #fbfcf9;
+      line-height: 1.45;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      z-index: 10;
+      min-width: min(280px, calc(100% - 32px));
+      max-width: calc(100% - 32px);
+      padding: 12px 14px;
+      border-radius: 8px;
+      color: #fff;
+      background: rgba(21, 21, 21, .92);
+      box-shadow: 0 14px 34px rgba(21, 21, 21, .20);
+      text-align: center;
+      font-weight: 850;
+      transform: translate(-50%, 18px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @media (max-width: 470px) {
+      .app {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .machine {
+        grid-template-rows: auto minmax(245px, 1fr) auto;
+        padding: 11px;
+      }
+
+      .slot-area {
+        min-height: 245px;
+        padding: 14px;
+      }
+
+      .slot-window {
+        min-height: 188px;
+      }
+
+      .dish {
+        min-height: 105px;
+        font-size: 2.45rem;
+      }
+
+      .dish.is-long {
+        font-size: 1.9rem;
+      }
+
+      .dish.is-extra-long {
+        font-size: 1.52rem;
+      }
+
+      .category-button {
+        min-height: 70px;
+        padding: 9px 5px;
+      }
+
+      .category-button span {
+        font-size: .95rem;
+      }
+
+      .subtitle {
+        max-width: 190px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .001ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" role="img">
+            <path d="M7 11h18"></path>
+            <path d="M9 11l2 14h10l2-14"></path>
+            <path d="M11 8c1.4-2.4 3.2-3.6 5-3.6S19.6 5.6 21 8"></path>
+            <path d="M12 16h8"></path>
+          </svg>
+        </div>
+        <div class="title">
+          <h1>?硫붿텛 猷곕젢</h1>
+          <div class="subtitle" id="menuCount">硫붾돱 怨꾩궛 以?/div>
+        </div>
+      </div>
+      <button class="icon-button" id="openEditor" type="button" aria-label="硫붾돱 ?몄쭛">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 20h9"></path>
+          <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+        </svg>
+      </button>
+    </header>
+
+    <section class="machine" aria-live="polite">
+      <div class="status-strip">
+        <div class="category-pill" id="categoryPill" data-category="諛?>諛?/div>
+        <div class="result-id" id="resultId">BAP-001</div>
+      </div>
+
+      <div class="slot-area" id="slotArea">
+        <div class="slot-window">
+          <div class="slot-label" id="slotLabel">?ㅻ뒛 ???/div>
+          <div class="dish" id="dishName">源移섎낭?뚮갈</div>
+          <div class="note" id="dishNote">怨꾨??꾨씪???щ━硫?諛붾줈 ?꾩꽦</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="minor-button" id="copyResult" type="button">寃곌낵 蹂듭궗</button>
+        <button class="minor-button" id="spinAgain" type="button">??踰???/button>
+      </div>
+    </section>
+
+    <footer>
+      <nav class="category-grid" aria-label="硫붾돱 移댄뀒怨좊━">
+        <button class="category-button" type="button" data-category="諛?>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 11c0 5 3.5 9 8 9s8-4 8-9Z"></path>
+            <path d="M7 11c1.2-1.6 2.9-2.4 5-2.4s3.8.8 5 2.4"></path>
+            <path d="M9 7V4"></path>
+            <path d="M13 7V3"></path>
+            <path d="M17 7V4"></path>
+          </svg>
+          <span>諛?/span>
+        </button>
+        <button class="category-button" type="button" data-category="怨좉린">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7.5 14.5C4.7 11.7 4.2 8 6.4 5.8s5.9-1.7 8.7 1.1 3.3 6.5 1.1 8.7-5.9 1.7-8.7-1.1Z"></path>
+            <path d="M15.3 15.1 20 20"></path>
+            <path d="M18.2 19.8c.9.4 1.8.2 2.3-.3s.7-1.4.3-2.3"></path>
+            <path d="M9.2 8.6h.01"></path>
+          </svg>
+          <span>怨좉린</span>
+        </button>
+        <button class="category-button" type="button" data-category="援?Ъ">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 12h14l-1.1 6.2A3.4 3.4 0 0 1 14.5 21h-5a3.4 3.4 0 0 1-3.4-2.8Z"></path>
+            <path d="M7 12c.5-1.8 2.2-3 5-3s4.5 1.2 5 3"></path>
+            <path d="M9 5c-.7.8-.7 1.5 0 2.3"></path>
+            <path d="M13 3.6c-.8 1-.8 2 0 3"></path>
+            <path d="M17 5c-.7.8-.7 1.5 0 2.3"></path>
+          </svg>
+          <span>援?Ъ</span>
+        </button>
+        <button class="category-button" type="button" data-category="?쒕뜡">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M16 3h5v5"></path>
+            <path d="M4 20 21 3"></path>
+            <path d="M21 16v5h-5"></path>
+            <path d="M15 15 21 21"></path>
+            <path d="M4 4l5.5 5.5"></path>
+          </svg>
+          <span>?쒕뜡</span>
+        </button>
+      </nav>
+      <div class="history" id="history" aria-label="理쒓렐 寃곌낵"></div>
+    </footer>
+  </main>
+
+  <dialog id="editorDialog">
+    <form class="editor" method="dialog">
+      <div class="editor-head">
+        <h2 class="editor-title">硫붾돱 ?몄쭛</h2>
+        <button class="icon-button" id="closeEditor" value="cancel" type="submit" aria-label="?リ린">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 6 6 18"></path>
+            <path d="M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="editor-body">
+        <div class="edit-group">
+          <label for="editRice">諛?/label>
+          <textarea id="editRice" spellcheck="false"></textarea>
+        </div>
+        <div class="edit-group">
+          <label for="editMeat">怨좉린</label>
+          <textarea id="editMeat" spellcheck="false"></textarea>
+        </div>
+        <div class="edit-group">
+          <label for="editSoup">援?Ъ</label>
+          <textarea id="editSoup" spellcheck="false"></textarea>
+        </div>
+      </div>
+      <div class="editor-actions">
+        <button class="minor-button" id="resetMenus" type="button">珥덇린??/button>
+        <button class="minor-button" id="saveMenus" value="default" type="submit">???/button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const STORAGE_KEY = "jemechu-roulette-v1";
+    const HISTORY_KEY = "jemechu-roulette-history-v1";
+
+    const DEFAULT_MENUS = {
+      "諛?: [
+        ["源移섎낭?뚮갈", "怨꾨??꾨씪???щ━硫?諛붾줈 ?꾩꽦"],
+        ["?쒖쑁??갈", "留ㅼ숴?섍퀬 ?ㅽ뙣 ?뺣쪧 ??쓬"],
+        ["?ㅻ??쇱씠??, "耳泥⑹쑝濡?留덉묠??],
+        ["移대젅?쇱씠??, "?됱옣怨??쇱콈 泥섎━源뚯? 媛??],
+        ["吏쒖옣諛?, "硫대낫??諛μ씠 ?밴린????],
+        ["?뚭퀬湲곕뜮諛?, "洹쒕룞 ?먮굦?쇰줈 媛蹂띻쾶"],
+        ["留덊뙆?먮???갈", "?쇱뼹??諛λ룄??],
+        ["?ㅽ뙵留덉슂??갈", "媛꾨떒?섏?留?媛뺣젰??],
+        ["李몄튂留덉슂??갈", "?몄쓽??媛먯꽦 ?낃렇?덉씠??],
+        ["?숈???갈", "留ㅼ슫留쏆쑝濡?由ъ뀑"],
+        ["?ㅼ쭠?대뜮諛?, "遺덊뼢 ?섎㈃ ??醫뗭쓬"],
+        ["?덉슦蹂띠쓬諛?, "?뚭린由??대㈃ ?밸쪧 ?곸듅"],
+        ["怨꾨?蹂띠쓬諛?, "?쒖씪 ?⑥닚???뺣떟"],
+        ["源띾몢湲곕낭?뚮갈", "援?갈吏?留쏆씠 ?섎뒗 ?좏깮"],
+        ["?뚮갈", "?≫넚 ?뱁엳???щ?"],
+        ["鍮꾨퉼諛?, "?쇱콈 留롮? 泥?媛??],
+        ["?뚯넡鍮꾨퉼諛?, "?꾨＝吏源뚯? 梨숆?"],
+        ["源諛?, "?쇰㈃?대옉 遺숈씠硫??꾩쟾泥?],
+        ["異⑸Т源諛?, "?ㅼ쭠?대Т移⑥씠 ?듭떖"],
+        ["?좊?珥덈갈", "?묎쾶 癒밴퀬 ?띠쓣 ??],
+        ["珥덈갈", "湲곕텇 醫뗭? ?몄떇 移대뱶"],
+        ["?곗뼱??갈", "??щ퉬 ?댁쭩"],
+        ["?뚮뜮諛?, "?덉숴留ㅼ숴?섍쾶"],
+        ["?ъ?", "媛蹂띻퀬 ?됯컧 醫뗭? ????],
+        ["?먮윭?쒕낵", "?쒕젅?깆씠 蹂몄껜"],
+        ["由ъ“??, "?щ┝?대굹 ?좊쭏?좊줈"],
+        ["濡쒖젣?뚯뒪?", "臾대궃??諛곕떖 媛뺤옄"],
+        ["?뚮━?ㅼ삱由ъ삤", "留덈뒛 留롮씠"],
+        ["?좊쭏?좏뙆?ㅽ?", "?곹겮???덉쟾??],
+        ["?щ┝?뚯뒪?", "袁몃뜒?????],
+        ["?쇱옄??, "移섏쫰媛 ?꾩슂????],
+        ["?쇱옄", "諛섎컲 議고빀 異붿쿇"],
+        ["?꾨쾭嫄?, "媛먰?源뚯? 媛硫??됰났"],
+        ["?肄?, "?먯뿉 ?ㅺ퀬 癒밸뒗 ???],
+        ["遺由щ삉", "諛κ퉴吏 ?ㅼ뼱媛??좊뱺??],
+        ["?援?닔", "援?Ъ???덉?留?諛?移댄뀒怨좊━ 媛먯꽦"],
+        ["?잜???, "?덉숴?ъ숴??硫??좏깮"],
+        ["遺꾩쭨", "媛蹂띻쾶 ?됰떎瑜?留?],
+        ["?뚮뱶?꾩튂", "??? ??곸뿉 醫뗭쓬"],
+        ["?좎뒪??, "媛꾨떒?섍퀬 ?곕쑜??],
+        ["?〓낭??, "?源 異붽??섎㈃ ????몄젙"],
+        ["?쇰낭??, "?꾩닔?붾Ъ ??낆?"],
+        ["?곕룞", "遺???곸? 硫???洹몃쫯"],
+        ["硫붾??뚮컮", "?쒖썝?섍쾶 ?뺣━"],
+        ["?됰㈃", "臾쇰깋 鍮꾨깋 怨좊?遺??],
+        ["肄⑷뎅??, "怨꾩젅 留욎쑝硫?媛뺣젰??],
+        ["移쇨뎅??, "源移섍? 留쏆엳?댁빞 ??],
+        ["?섏젣鍮?, "已꾧퉫??吏묐갈 ?먮굦"],
+        ["留뚮몢", "李먮쭔??援곕쭔??諛섎컲"],
+        ["鍮꾨퉼援?닔", "留ㅼ숴?덉숴 鍮좊Ⅸ ?좏깮"]
+      ],
+      "怨좉린": [
+        ["援쎈꽕 ?ㅻ━吏??, "?대갚??援ъ슫 移섑궓"],
+        ["援쎈꽕 怨좎텛諛붿궗??, "留ㅼ숴諛붿궘 ???二쇱옄"],
+        ["援쎈꽕 蹂쇱??대끂", "遺덈쭧 ?뚯뒪媛 ?밴만 ??],
+        ["BHC 肉뚮쭅??, "?⑥쭬 移섏쫰媛猷??대옒??],
+        ["BHC 留쏆큹??, "媛꾩옣 ?뚯뒪 怨꾩뿴"],
+        ["BBQ ?⑷툑?щ━釉?, "?꾨씪?대뱶 ?뺤꽍"],
+        ["BBQ ?먮찓?댁뭅 ?듬떎由?, "?묐뀗 吏꾪븳 ??떎由?],
+        ["援먯큿 ?덈땲肄ㅻ낫", "?щ떖吏?ℓ???덉쟾??],
+        ["援먯큿 ?덈뱶肄ㅻ낫", "留ㅼ슫 媛꾩옣 移섑궓"],
+        ["?ㅻ꽕移섑궓 ?ㅻ끂?숈튂利?, "媛猷?移섑궓???밴린????],
+        ["?ㅻ꽕移섑궓 ?뚮떗", "?뚯콈濡??곕쑜?섍쾶"],
+        ["泥섍컭吏??덊봽由쇱뼇??, "?ъ숴???묐뀗 媛뺤옄"],
+        ["泥섍컭吏??묐뀗移섑궓", "?묐뀗移섑궓 湲곕낯湲?],
+        ["?몃씪??釉붾옓?뚮━??, "留덈뒛媛꾩옣 怨좉툒吏?留?],
+        ["?몃씪??怨좎텛留덉슂", "留ㅼ숴怨좎냼??議고빀"],
+        ["60怨??몃옉?댁튂??, "吏?ℓ留ㅼ숴???먭레"],
+        ["硫뺤떆移대굹 ?≪큹移섑궓", "留ㅼ슫留??뺤떎??],
+        ["?몃옉?듬떗 ?뚯떥??留덈뒛移섑궓", "留덈뒛 ?뚯뒪 ?щ퓤"],
+        ["?섎━移대굹 ?묐뀗移섑궓", "?쏅궇 ?묐뀗 媛먯꽦"],
+        ["?몄떇?대몢留덈━移섑궓 留ㅼ슫媛꾩옣", "??留덈━ 媛?깅퉬"],
+        ["?먮떞移섑궓 留듭뒓??, "留ㅼ슫 移섑궓 ?꾨낫"],
+        ["?먮옒?ㅻ옒 媛덈┃諛섑빂?묐뀗諛?, "諛섎컲?쇰줈 ???],
+        ["吏肄붾컮 ??텋?묐뀗移섑궓", "移섎갈源뚯? 媛??],
+        ["?숆렐????텋?먮쭏由ъ튂??, "??텋 ?묐뀗?쇰줈 ?좊뱺?섍쾶"],
+        ["袁몃툕?쇨섕 ??텋?먮쭏由ъ튂??, "援ъ슫 移섑궓 履??좏깮"],
+        ["?ㅻ툙留덈（ 濡쒖뒪?몄튂??, "?대갚???ㅻ툙 移섑궓"],
+        ["?쇨껸??, "吏묒씠??媛寃뚮뱺 ?뺤떎??],
+        ["紐⑹궡援ъ씠", "湲곕쫫湲??곷떦???좏깮"],
+        ["??젙??, "已꾧퉫怨좎냼???뱀닔遺??],
+        ["媛덈ℓ湲곗궡", "?뚭툑援ъ씠濡?醫뗭쓬"],
+        ["?쇱?媛덈퉬", "?щ떖???묐뀗 怨좉린"],
+        ["?뚭컝鍮꾩궡", "湲곕텇 ?대뒗 怨좉린"],
+        ["LA媛덈퉬", "諛μ씠????留욎쓬"],
+        ["李⑤룎諛뺤씠", "鍮⑤━ ?듭뼱??醫뗭쓬"],
+        ["遺덇퀬湲?, "?щ떖??吏묐갈 怨좉린"],
+        ["??컝鍮?, "蹂띠쓬諛κ퉴吏 ?덉젙??],
+        ["?ㅻ━怨좉린", "?덉젣??濡쒖뒪??醫뗭쓬"],
+        ["議깅컻", "留됯뎅??遺숈씠硫??꾩꽦"],
+        ["蹂댁뙂", "源移섍? ?밸?泥?],
+        ["?섏쑁", "?대갚?섍쾶 癒밸뒗 怨좉린"],
+        ["怨깆갹", "?먮겮?④낵 怨좎냼???ъ씠"],
+        ["?李?, "媛뺥븳 ?좏깮"],
+        ["留됱갹", "?뚯뒪 李띿뼱 癒밸뒗 留?],
+        ["?묎섕移?, "易붾? ?꾩닔"],
+        ["?ㅽ뀒?댄겕", "?ㅻ뒛? 移쇱쭏"],
+        ["?덉뭅痢?, "?깆떖 ?덉떖 怨좊?"],
+        ["移섏쫰?덉뭅痢?, "彛??섏뼱?섎뒗 移섏쫰"],
+        ["媛痢좊룞", "?덉뭅痢좎? 諛μ쓽 以묎컙吏?"],
+        ["?⑤컯?ㅽ뀒?댄겕", "?뚯뒪? 怨꾨? 議고빀"],
+        ["誘명듃蹂??좊쭏?좏뙆?ㅽ?", "怨좉린 ?ㅼ뼱媛??뚯뒪?"]
+      ],
+      "援?Ъ": [
+        ["遺?李뚭컻", "?쇰㈃?щ━ ?ｌ쑝硫???],
+        ["?ㅻ럢??, "?⑤걟?섍퀬 媛踰쇱슫 援?Ъ"],
+        ["源移섏컡媛?, "?쇱?怨좉린 留롮씠"],
+        ["?쒖옣李뚭컻", "諛μ씠???쒖씪 ?덉젙??],
+        ["?쒕몢遺李뚭컻", "怨꾨? ??],
+        ["泥?뎅??, "媛뺥븯吏留??좊뱺??],
+        ["媛먯옄??, "堉???뒗 ???],
+        ["堉덊빐?κ뎅", "?쇰갈??媛?ν븳 援?Ъ"],
+        ["?ㅻ쟻??, "?뚭툑 ?꾩텛濡?留덈Т由?],
+        ["怨고깢", "留묎퀬 ?좊뱺???좏깮"],
+        ["媛덈퉬??, "怨좉린??援?Ъ??梨숆?"],
+        ["?↔컻??, "?쇳겙???뚭퀬湲?援?Ъ"],
+        ["?뚭퀬湲곕Т援?, "?대갚??吏묐갈 援?Ъ"],
+        ["誘몄뿭援?, "???명븳 ???],
+        ["遺곸뾿援?, "源붾걫?섍퀬 媛쒖슫??],
+        ["肄⑸굹臾쇨뎅諛?, "?④쾪寃???洹몃쫯"],
+        ["?쇱?援?갈", "遺異??щ퓤"],
+        ["?쒕?援?, "?ㅻ?湲?議곗젅"],
+        ["?댁옣??, "吏꾪븳 援?Ъ ?좏깮"],
+        ["異붿뼱??, "紐몃낫??履?],
+        ["?쇨퀎??, "????留덈━ ?좊뱺??],
+        ["??븳留덈━", "移쇨뎅?섍퉴吏 媛??],
+        ["?ㅻ툕?ㅻ툕", "?쇱콈??梨숆린??泥?],
+        ["留덈씪??, "?щ즺 怨좊Ⅴ???щ?"],
+        ["?좉텋", "留ㅼ슫??諛깊깢 諛섎컲"],
+        ["吏щ퐬", "遺덈쭧 ?섎뒗 援?Ъ硫?],
+        ["?몃㈃", "遺?쒕윭??以묒떇 援?Ъ"],
+        ["?援?닔", "?숈＜? 怨좎닔 ?좏깮"],
+        ["?쇰찘", "?덉퐫痢??쇱쑀 誘몄냼 以???],
+        ["?섍??ы궎吏щ퐬", "?섏? 援?Ъ?몃뜲 吏꾪븿"],
+        ["?곕룞?꾧낏", "遺???녿뒗 ?⑤걟??],
+        ["源移섏슦??, "移쇱뭡??硫?援?Ъ"],
+        ["移쇰쭔?먭뎅", "移쇨뎅?섏? 留뚮몢 ?숈떆 ?닿껐"],
+        ["?↔뎅", "怨꾨?吏???덉쑝硫?醫뗭쓬"],
+        ["留뚮몿援?, "?됰룞留뚮몢 援ъ썝?ъ닔"],
+        ["?섏젣鍮?, "吏꾪븳 硫몄튂?≪닔濡?],
+        ["?뚰깢", "?쇳겙?섍퀬 ?몄쭚??],
+        ["?援ы깢", "?쒖썝???앹꽑 援?Ъ"],
+        ["留ㅼ슫??, "??癒밴퀬 ???ㅼ쓬 留?],
+        ["?꾧뎄李?援?Ъ蹂띠쓬諛?, "援?Ъ?뚯쓽 蹂移??좏깮"],
+        ["議곌컻??, "媛쒖슫?섍퀬 ?쒖썝??],
+        ["?랁빀??, "媛꾨떒???ъ감 ?먮굦"],
+        ["?좊쭏?좎뒪??, "鍮듭씠????留욎쓬"],
+        ["?щ┝?ㅽ봽? 諛붽쾶??, "媛蹂띻퀬 ?곕쑜?섍쾶"],
+        ["誘쇰Ъ?덉슦??, "?쒖썝??留ㅼ슫 援?Ъ"]
+      ]
+    };
+
+    const CATEGORY_ORDER = ["諛?, "怨좉린", "援?Ъ", "?쒕뜡"];
+    const CATEGORY_PREFIX = {
+      "諛?: "BAP",
+      "怨좉린": "MEAT",
+      "援?Ъ": "SOUP",
+      "?쒕뜡": "RAND"
+    };
+
+    const state = {
+      menus: loadMenus(),
+      currentCategory: "諛?,
+      currentItem: null,
+      spinning: false,
+      history: loadHistory()
+    };
+
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => Array.from(document.querySelectorAll(selector));
+
+    const els = {
+      menuCount: $("#menuCount"),
+      categoryPill: $("#categoryPill"),
+      resultId: $("#resultId"),
+      slotArea: $("#slotArea"),
+      slotLabel: $("#slotLabel"),
+      dishName: $("#dishName"),
+      dishNote: $("#dishNote"),
+      copyResult: $("#copyResult"),
+      spinAgain: $("#spinAgain"),
+      history: $("#history"),
+      openEditor: $("#openEditor"),
+      editorDialog: $("#editorDialog"),
+      editRice: $("#editRice"),
+      editMeat: $("#editMeat"),
+      editSoup: $("#editSoup"),
+      saveMenus: $("#saveMenus"),
+      resetMenus: $("#resetMenus"),
+      toast: $("#toast")
+    };
+
+    function cloneMenus(source) {
+      return Object.fromEntries(
+        Object.entries(source).map(([category, rows]) => [
+          category,
+          rows.map(([name, note]) => ({ name, note }))
+        ])
+      );
+    }
+
+    function loadMenus() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!saved) return cloneMenus(DEFAULT_MENUS);
+        return {
+          "諛?: normalizeSavedList(saved["諛?], DEFAULT_MENUS["諛?]),
+          "怨좉린": normalizeSavedList(saved["怨좉린"], DEFAULT_MENUS["怨좉린"]),
+          "援?Ъ": normalizeSavedList(saved["援?Ъ"], DEFAULT_MENUS["援?Ъ"])
+        };
+      } catch {
+        return cloneMenus(DEFAULT_MENUS);
+      }
+    }
+
+    function normalizeSavedList(list, fallback) {
+      if (!Array.isArray(list) || list.length === 0) {
+        return fallback.map(([name, note]) => ({ name, note }));
+      }
+      return list
+        .map((item) => {
+          if (typeof item === "string") return parseMenuLine(item);
+          return {
+            name: String(item.name || "").trim(),
+            note: String(item.note || "").trim()
+          };
+        })
+        .filter((item) => item.name);
+    }
+
+    function loadHistory() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(HISTORY_KEY));
+        return Array.isArray(saved) ? saved.slice(0, 8) : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveMenusToStorage() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.menus));
+    }
+
+    function saveHistory() {
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(state.history.slice(0, 8)));
+    }
+
+    function getPool(category) {
+      if (category === "?쒕뜡") {
+        return ["諛?, "怨좉린", "援?Ъ"].flatMap((realCategory) =>
+          state.menus[realCategory].map((item, index) => ({ ...item, category: realCategory, index }))
+        );
+      }
+      return state.menus[category].map((item, index) => ({ ...item, category, index }));
+    }
+
+    function randomFrom(list) {
+      return list[Math.floor(Math.random() * list.length)];
+    }
+
+    function getDisplayId(category, item) {
+      const prefix = category === "?쒕뜡" ? CATEGORY_PREFIX["?쒕뜡"] : CATEGORY_PREFIX[item.category];
+      const number = String(item.index + 1).padStart(3, "0");
+      return `${prefix}-${number}`;
+    }
+
+    function setDishText(name) {
+      els.dishName.classList.toggle("is-long", name.length >= 9);
+      els.dishName.classList.toggle("is-extra-long", name.length >= 14);
+      els.dishName.textContent = name;
+    }
+
+    function renderResult(category, item, label = "?ㅻ뒛 ???) {
+      state.currentCategory = category;
+      state.currentItem = item;
+      els.categoryPill.dataset.category = category;
+      els.categoryPill.textContent = category;
+      els.resultId.textContent = getDisplayId(category, item);
+      els.slotLabel.textContent = label;
+      setDishText(item.name);
+      els.dishNote.textContent = item.note || `${item.category} ?꾨낫`;
+      updateMenuCount();
+    }
+
+    function updateMenuCount() {
+      const total = getPool("?쒕뜡").length;
+      els.menuCount.textContent = `諛?${state.menus["諛?].length} 쨌 怨좉린 ${state.menus["怨좉린"].length} 쨌 援?Ъ ${state.menus["援?Ъ"].length} 쨌 珥?${total}`;
+    }
+
+    function vibrate(pattern) {
+      if ("vibrate" in navigator) {
+        navigator.vibrate(pattern);
+      }
+    }
+
+    function spin(category) {
+      if (state.spinning) return;
+      const pool = getPool(category);
+      if (!pool.length) {
+        showToast("硫붾돱媛 鍮꾩뼱 ?덉뼱??);
+        return;
+      }
+
+      const target = randomFrom(pool);
+      const duration = 2350 + Math.floor(Math.random() * 650);
+      const start = performance.now();
+      let lastTick = 0;
+      state.spinning = true;
+      setControlsDisabled(true);
+      els.slotArea.classList.add("spinning");
+      els.slotLabel.textContent = "?뚯븘媛??以?;
+      vibrate(16);
+
+      function frame(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const delay = 26 + progress * progress * 175;
+
+        if (now - lastTick > delay) {
+          const item = randomFrom(pool);
+          renderResult(category, item, progress > .72 ? "?ъ뒳 硫덉텛??以? : "?뚯븘媛??以?);
+          lastTick = now;
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(frame);
+          return;
+        }
+
+        state.spinning = false;
+        els.slotArea.classList.remove("spinning");
+        renderResult(category, target, "?뱀꺼");
+        addHistory(category, target);
+        setControlsDisabled(false);
+        burstSparks();
+        vibrate([24, 36, 28]);
+      }
+
+      requestAnimationFrame(frame);
+    }
+
+    function setControlsDisabled(disabled) {
+      $$(".category-button, #spinAgain").forEach((button) => {
+        button.disabled = disabled;
+      });
+    }
+
+    function addHistory(category, item) {
+      state.history.unshift({
+        category,
+        realCategory: item.category,
+        name: item.name,
+        note: item.note,
+        index: item.index,
+        time: Date.now()
+      });
+      state.history = state.history.slice(0, 8);
+      saveHistory();
+      renderHistory();
+    }
+
+    function renderHistory() {
+      els.history.innerHTML = "";
+      state.history.forEach((item) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "history-item";
+        button.setAttribute("aria-label", `${item.name} ?ㅼ떆 蹂닿린`);
+        button.innerHTML = `<span class="history-dot" aria-hidden="true"></span><span class="history-name"></span>`;
+        button.querySelector(".history-name").textContent = item.name;
+        button.style.color = getCategoryColor(item.realCategory || item.category);
+        button.addEventListener("click", () => {
+          renderResult(item.category, {
+            category: item.realCategory || item.category,
+            name: item.name,
+            note: item.note,
+            index: Number.isFinite(item.index) ? item.index : 0
+          }, "理쒓렐 寃곌낵");
+        });
+        els.history.appendChild(button);
+      });
+    }
+
+    function getCategoryColor(category) {
+      if (category === "怨좉린") return "var(--meat)";
+      if (category === "援?Ъ") return "var(--soup)";
+      if (category === "?쒕뜡") return "var(--random)";
+      return "var(--rice)";
+    }
+
+    function burstSparks() {
+      const colors = ["#f2c84b", "#f05745", "#009a8d", "#4f9d69", "#222222"];
+      for (let i = 0; i < 18; i += 1) {
+        const spark = document.createElement("span");
+        spark.className = "spark";
+        spark.style.left = `${46 + Math.random() * 8}%`;
+        spark.style.top = `${47 + Math.random() * 8}%`;
+        spark.style.background = colors[i % colors.length];
+        spark.style.setProperty("--tx", `${-120 + Math.random() * 240}px`);
+        spark.style.setProperty("--ty", `${-140 + Math.random() * 210}px`);
+        spark.style.animationDelay = `${Math.random() * 80}ms`;
+        els.slotArea.appendChild(spark);
+        spark.addEventListener("animationend", () => spark.remove(), { once: true });
+      }
+    }
+
+    async function copyResult() {
+      if (!state.currentItem) return;
+      const text = `[${state.currentCategory}] ${state.currentItem.name} - ${state.currentItem.note}`;
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("蹂듭궗?덉뼱??);
+      } catch {
+        showToast(text);
+      }
+    }
+
+    function showToast(message) {
+      els.toast.textContent = message;
+      els.toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => {
+        els.toast.classList.remove("show");
+      }, 1500);
+    }
+
+    function parseMenuLine(line) {
+      const [rawName, ...rawNote] = line.split("|");
+      return {
+        name: rawName.trim(),
+        note: rawNote.join("|").trim()
+      };
+    }
+
+    function listToText(list) {
+      return list.map((item) => item.note ? `${item.name} | ${item.note}` : item.name).join("\n");
+    }
+
+    function textToList(text, fallbackCategory) {
+      const parsed = text
+        .split(/\n+/)
+        .map(parseMenuLine)
+        .filter((item) => item.name)
+        .map((item) => ({
+          name: item.name,
+          note: item.note || `${fallbackCategory} ?꾨낫`
+        }));
+      return parsed.length ? parsed : cloneMenus({ [fallbackCategory]: DEFAULT_MENUS[fallbackCategory] })[fallbackCategory];
+    }
+
+    function openEditor() {
+      els.editRice.value = listToText(state.menus["諛?]);
+      els.editMeat.value = listToText(state.menus["怨좉린"]);
+      els.editSoup.value = listToText(state.menus["援?Ъ"]);
+      if (typeof els.editorDialog.showModal === "function") {
+        els.editorDialog.showModal();
+      } else {
+        showToast("??釉뚮씪?곗????몄쭛 李쎌쓣 吏?먰븯吏 ?딆븘??);
+      }
+    }
+
+    function saveEditor() {
+      state.menus["諛?] = textToList(els.editRice.value, "諛?);
+      state.menus["怨좉린"] = textToList(els.editMeat.value, "怨좉린");
+      state.menus["援?Ъ"] = textToList(els.editSoup.value, "援?Ъ");
+      saveMenusToStorage();
+      updateMenuCount();
+      showToast("??ν뻽?댁슂");
+    }
+
+    function resetMenus() {
+      state.menus = cloneMenus(DEFAULT_MENUS);
+      saveMenusToStorage();
+      els.editRice.value = listToText(state.menus["諛?]);
+      els.editMeat.value = listToText(state.menus["怨좉린"]);
+      els.editSoup.value = listToText(state.menus["援?Ъ"]);
+      updateMenuCount();
+      showToast("湲곕낯 硫붾돱濡?諛붽엥?댁슂");
+    }
+
+    function attachEvents() {
+      $$(".category-button").forEach((button) => {
+        button.addEventListener("click", () => spin(button.dataset.category));
+      });
+      els.spinAgain.addEventListener("click", () => spin(state.currentCategory || "?쒕뜡"));
+      els.copyResult.addEventListener("click", copyResult);
+      els.openEditor.addEventListener("click", openEditor);
+      els.saveMenus.addEventListener("click", saveEditor);
+      els.resetMenus.addEventListener("click", resetMenus);
+      document.addEventListener("keydown", (event) => {
+        if (event.repeat || state.spinning || els.editorDialog.open) return;
+        const map = {
+          "1": "諛?,
+          "2": "怨좉린",
+          "3": "援?Ъ",
+          "4": "?쒕뜡",
+          "Enter": state.currentCategory || "?쒕뜡",
+          " ": state.currentCategory || "?쒕뜡"
+        };
+        if (map[event.key]) {
+          event.preventDefault();
+          spin(map[event.key]);
+        }
+      });
+    }
+
+    function registerServiceWorker() {
+      if (!("serviceWorker" in navigator)) return;
+      if (location.protocol !== "https:" && location.hostname !== "localhost" && location.hostname !== "127.0.0.1") return;
+      navigator.serviceWorker.register("./sw.js").catch(() => {});
+    }
+
+    function init() {
+      attachEvents();
+      renderHistory();
+      renderResult("諛?, { ...state.menus["諛?][0], category: "諛?, index: 0 }, "?ㅻ뒛 ???);
+      registerServiceWorker();
+    }
+
+    init();
+  </script>
+</body>
+</html>
+

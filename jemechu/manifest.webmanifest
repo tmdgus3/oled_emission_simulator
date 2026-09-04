@@ -1,0 +1,20 @@
+﻿{
+  "name": "?硫붿텛 猷곕젢",
+  "short_name": "?硫붿텛",
+  "description": "諛? 怨좉린, 援?Ъ, ?쒕뜡?쇰줈 ?뚮━?????硫붾돱 猷곕젢",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f7f4",
+  "theme_color": "#f05745",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
+

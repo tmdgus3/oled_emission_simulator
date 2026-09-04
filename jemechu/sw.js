@@ -1,4 +1,4 @@
-const CACHE_NAME = "jemechu-roulette-v4";
+const CACHE_NAME = "jemechu-roulette-v5";
 const ASSETS = [
   "./index.html",
   "./manifest.webmanifest",

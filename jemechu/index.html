@@ -1076,6 +1076,42 @@
         transform: translateY(-6px);
       }
     }
+
+    /* v12 portrait separation and record label */
+    .portrait-stage::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      z-index: 0;
+      width: min(86%, 330px);
+      height: min(70%, 320px);
+      border-radius: 48% 48% 18px 18px;
+      background: linear-gradient(180deg, rgba(255, 246, 225, .84), rgba(255, 236, 244, .58));
+      box-shadow: inset 0 0 0 1px rgba(32, 32, 24, .12), 0 12px 24px rgba(32, 32, 24, .10);
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .portrait {
+      filter:
+        drop-shadow(0 0 1px rgba(20, 30, 42, .72))
+        drop-shadow(0 0 3px rgba(20, 30, 42, .28))
+        drop-shadow(0 16px 24px rgba(21, 21, 21, .20));
+    }
+
+    #recordTab {
+      color: var(--spot);
+      border-color: rgba(207, 63, 134, .26);
+      background: rgba(255, 255, 255, .86);
+    }
+
+    #recordTab.is-active {
+      color: #fff;
+      border-color: var(--spot);
+      background: var(--spot);
+    }
+    /* end v12 portrait separation and record label */
   </style>
 </head>
 <body>
@@ -1105,7 +1141,7 @@
 
     <nav class="view-tabs" aria-label="화면 선택">
       <button class="tab-button is-active" id="rouletteTab" type="button" aria-controls="rouletteView" aria-selected="true">뭐 먹지?</button>
-      <button class="tab-button" id="recordTab" type="button" aria-controls="recordView" aria-selected="false">지영이가 골라준 저녁 메뉴</button>
+      <button class="tab-button" id="recordTab" type="button" aria-controls="recordView" aria-selected="false">졍메추 기록</button>
     </nav>
     <section class="view roulette-view" id="rouletteView">
     <section class="machine" aria-live="polite">
@@ -1127,7 +1163,7 @@
 
       <div class="actions">
         <button class="minor-button" id="copyResult" type="button">복사</button>
-        <button class="minor-button star-button" id="starResult" type="button" aria-pressed="false" aria-label="지영이가 골라준 메뉴로 표시" disabled>
+        <button class="minor-button star-button" id="starResult" type="button" aria-pressed="false" aria-label="졍메추 기록으로 표시" disabled>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 14.7 9l6.1.9-4.4 4.3 1 6.1L12 17.4l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z"></path></svg>
           <span>별표</span>
         </button>
@@ -1194,7 +1230,7 @@
           <input id="pickName" type="text" aria-label="메뉴" placeholder="메뉴">
           <button id="addPick" type="submit">추가</button>
         </form>
-        <div class="pick-list" id="pickList" aria-label="지영이가 골라준 저녁 메뉴"></div>
+        <div class="pick-list" id="pickList" aria-label="졍메추 기록"></div>
       </div>
     </section>
   </main>

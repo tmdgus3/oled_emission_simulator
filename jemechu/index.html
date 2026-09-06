@@ -396,12 +396,7 @@
     }
 
     .history {
-      min-height: 42px;
-      display: flex;
-      gap: 7px;
-      overflow-x: auto;
-      padding: 2px 0 4px;
-      scrollbar-width: none;
+      display: none;
     }
 
     .history::-webkit-scrollbar {
@@ -1021,7 +1016,7 @@
       currentCategory: "밥",
       currentItem: null,
       spinning: false,
-      history: loadHistory()
+      history: []
     };
 
     const $ = (selector) => document.querySelector(selector);
@@ -1089,10 +1084,8 @@
     }
 
     function loadHistory() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(HISTORY_KEY));
-        return Array.isArray(saved) ? saved.slice(0, 8) : [];
-      } catch {
+      return [];
+    } catch {
         return [];
       }
     }
@@ -1102,7 +1095,7 @@
     }
 
     function saveHistory() {
-      localStorage.setItem(HISTORY_KEY, JSON.stringify(state.history.slice(0, 8)));
+      clearStoredHistory();
     }
 
     function getPool(category) {
@@ -1201,7 +1194,7 @@
         state.spinning = false;
         els.slotArea.classList.remove("spinning");
         renderResult(category, target, "당첨");
-        addHistory(category, target);
+        clearStoredHistory();
         setControlsDisabled(false);
         burstSparks();
         vibrate([24, 36, 28]);
@@ -1216,40 +1209,22 @@
       });
     }
 
-    function addHistory(category, item) {
-      state.history.unshift({
-        category,
-        realCategory: item.category,
-        name: item.name,
-        note: item.note,
-        index: item.index,
-        time: Date.now()
-      });
-      state.history = state.history.slice(0, 8);
-      saveHistory();
+    function addHistory() {
+      state.history = [];
+      clearStoredHistory();
       renderHistory();
     }
 
     function renderHistory() {
       els.history.innerHTML = "";
-      state.history.forEach((item) => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "history-item";
-        button.setAttribute("aria-label", `${item.name} 다시 보기`);
-        button.innerHTML = `<span class="history-dot" aria-hidden="true"></span><span class="history-name"></span>`;
-        button.querySelector(".history-name").textContent = item.name;
-        button.style.color = getCategoryColor(item.realCategory || item.category);
-        button.addEventListener("click", () => {
-          renderResult(item.category, {
-            category: item.realCategory || item.category,
-            name: item.name,
-            note: item.note,
-            index: Number.isFinite(item.index) ? item.index : 0
-          }, "최근 결과");
-        });
-        els.history.appendChild(button);
-      });
+    }
+
+    function clearStoredHistory() {
+      try {
+        Object.keys(localStorage)
+          .filter((key) => key.startsWith("jemechu-roulette-history"))
+          .forEach((key) => localStorage.removeItem(key));
+      } catch {}
     }
 
     function getCategoryColor(category) {
@@ -1388,6 +1363,7 @@
 
     function init() {
       attachEvents();
+      clearStoredHistory();
       renderHistory();
       renderResult("밥", { ...state.menus["밥"][0], category: "밥", index: 0 }, "오늘 저녁");
       registerServiceWorker();

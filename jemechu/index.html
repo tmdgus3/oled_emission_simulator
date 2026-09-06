@@ -679,6 +679,390 @@
         transition-duration: .001ms !important;
       }
     }
+    /* v8 jemechu compact updates */
+    :root {
+      --spot: #cf3f86;
+      --board: #fbf3dc;
+      --board-ink: #202018;
+      --menu-red: #c83f32;
+      --menu-green: #177d67;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background:
+        linear-gradient(180deg, #fff8eb 0%, #f3f5ee 54%, #e9f6f0 100%);
+    }
+
+    .app {
+      width: min(100vw, 430px);
+      height: 100dvh;
+      min-height: 640px;
+      margin: 0 auto;
+      padding: calc(env(safe-area-inset-top) + 8px) 12px calc(env(safe-area-inset-bottom) + 8px);
+      grid-template-rows: auto auto minmax(0, 1fr);
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    .topbar {
+      min-height: 42px;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+    }
+
+    h1 {
+      font-size: 1.24rem;
+    }
+
+    .subtitle {
+      max-width: 280px;
+      font-size: .8rem;
+    }
+
+    .icon-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+    }
+
+    .view-tabs {
+      display: grid;
+      grid-template-columns: .75fr 1.25fr;
+      gap: 6px;
+      min-height: 38px;
+    }
+
+    .tab-button {
+      min-width: 0;
+      min-height: 38px;
+      padding: 6px 8px;
+      border: 1px solid rgba(21, 21, 21, .12);
+      border-radius: 8px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, .78);
+      font-size: .82rem;
+      line-height: 1.12;
+      font-weight: 900;
+      word-break: keep-all;
+      box-shadow: 0 7px 18px rgba(21, 21, 21, .06);
+    }
+
+    .tab-button.is-active {
+      color: #fff;
+      border-color: var(--ink);
+      background: var(--ink);
+    }
+
+    .view[hidden] {
+      display: none !important;
+    }
+
+    .roulette-view {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      gap: 8px;
+    }
+
+    .machine {
+      min-height: 0;
+      grid-template-rows: minmax(0, 1fr) auto;
+      gap: 8px;
+      padding: 10px;
+      border-color: rgba(32, 32, 24, .16);
+      background: rgba(255, 255, 255, .9);
+      box-shadow: 0 14px 38px rgba(21, 21, 21, .12);
+    }
+
+    .slot-area {
+      min-height: 0;
+      height: 100%;
+      padding: 9px;
+      border: 2px solid rgba(32, 32, 24, .76);
+      background:
+        linear-gradient(90deg, rgba(200, 63, 50, .12) 0 8px, transparent 8px calc(100% - 8px), rgba(23, 125, 103, .12) calc(100% - 8px)),
+        repeating-linear-gradient(0deg, rgba(32, 32, 24, .045) 0 1px, transparent 1px 30px),
+        linear-gradient(180deg, #fffaf0 0%, var(--board) 52%, #fffdf6 100%);
+      box-shadow: inset 0 0 0 6px rgba(255, 255, 255, .72);
+    }
+
+    .slot-area::before {
+      background:
+        repeating-linear-gradient(90deg, rgba(32, 32, 24, .045) 0 1px, transparent 1px 30px),
+        linear-gradient(180deg, rgba(255,255,255,.55), transparent 44%);
+      opacity: 1;
+    }
+
+    .slot-area::after {
+      inset: 8px;
+      border: 1px dashed rgba(32, 32, 24, .22);
+      border-radius: 8px;
+    }
+
+    .slot-window {
+      height: 100%;
+      min-height: 0;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 5px;
+    }
+
+    .slot-label {
+      min-height: 25px;
+      padding: 3px 9px;
+      border-color: rgba(32, 32, 24, .22);
+      color: var(--board-ink);
+      background: #fffef8;
+      font-size: .78rem;
+    }
+
+    .portrait-stage {
+      width: 100%;
+      min-height: 0;
+      height: 100%;
+      padding-top: 44px;
+      overflow: hidden;
+      align-items: start;
+    }
+
+    .speech-bubble {
+      top: 4px;
+      max-width: min(94%, 322px);
+      min-height: 40px;
+      padding: 8px 13px;
+      border-width: 2px;
+      border-radius: 8px;
+      font-size: .98rem;
+      white-space: nowrap;
+    }
+
+    .portrait {
+      width: auto;
+      height: min(52dvh, 390px);
+      max-width: 120%;
+      max-height: none;
+      object-fit: contain;
+      object-position: top center;
+      transform: translateY(-6px);
+      transition: opacity .16s ease, transform .18s ease;
+    }
+
+    .slot-area.result-ready .portrait {
+      height: min(50dvh, 370px);
+      transform: translateY(-4px);
+    }
+
+    .dish {
+      min-height: 58px;
+      padding: 8px 10px;
+      border: 2px solid rgba(32, 32, 24, .84);
+      border-radius: 8px;
+      color: var(--board-ink);
+      background: rgba(255, 255, 255, .94);
+      box-shadow: 0 10px 0 rgba(32, 32, 24, .08);
+      font-size: 2rem;
+      line-height: 1.05;
+    }
+
+    .dish.is-long { font-size: 1.68rem; }
+    .dish.is-extra-long { font-size: 1.28rem; }
+
+    .actions {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+    }
+
+    .minor-button {
+      min-height: 38px;
+      border-radius: 8px;
+      font-size: .86rem;
+    }
+
+    .star-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      color: var(--ink);
+    }
+
+    .star-button svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linejoin: round;
+    }
+
+    .star-button[aria-pressed="true"] {
+      border-color: #d1a100;
+      background: #fff3b9;
+      color: #6f5100;
+    }
+
+    .star-button[aria-pressed="true"] svg {
+      fill: currentColor;
+    }
+
+    footer {
+      min-height: 0;
+    }
+
+    .category-grid {
+      gap: 6px;
+    }
+
+    .category-button {
+      min-height: 58px;
+      grid-template-rows: 21px auto;
+      gap: 3px;
+      padding: 7px 4px;
+      border-radius: 8px;
+    }
+
+    .category-button svg {
+      width: 21px;
+      height: 21px;
+    }
+
+    .category-button span {
+      font-size: .8rem;
+    }
+
+    .record-view {
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .record-panel {
+      height: 100%;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 9px;
+      padding: 11px;
+      border: 1px solid rgba(21, 21, 21, .1);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .92);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .record-form {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr auto;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .record-form input {
+      min-width: 0;
+      height: 38px;
+      padding: 0 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: #fff;
+      font: inherit;
+      font-size: .82rem;
+      font-weight: 750;
+    }
+
+    .record-form button {
+      height: 38px;
+      padding: 0 11px;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--spot);
+      font-weight: 900;
+    }
+
+    .pick-list {
+      min-height: 0;
+      display: grid;
+      align-content: start;
+      gap: 7px;
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .pick-row {
+      display: grid;
+      grid-template-columns: 84px minmax(0, 1fr) 36px;
+      align-items: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 7px 7px 7px 10px;
+      border: 1px solid rgba(207, 63, 134, .22);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .pick-date {
+      color: var(--muted);
+      font-size: .74rem;
+      line-height: 1.18;
+      font-weight: 800;
+    }
+
+    .pick-name {
+      min-width: 0;
+      color: var(--ink);
+      font-size: .98rem;
+      line-height: 1.16;
+      font-weight: 950;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    .pick-remove {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: #8f5c00;
+      background: #fff1b3;
+    }
+
+    .pick-remove svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      fill: currentColor;
+      stroke-width: 2;
+    }
+
+    @media (max-height: 760px) {
+      .app {
+        min-height: 600px;
+        padding-top: calc(env(safe-area-inset-top) + 6px);
+        padding-bottom: calc(env(safe-area-inset-bottom) + 6px);
+        gap: 6px;
+      }
+      .machine { padding: 8px; }
+      .portrait { height: min(45dvh, 330px); }
+      .slot-area.result-ready .portrait { height: min(44dvh, 315px); }
+      .dish { min-height: 50px; font-size: 1.72rem; }
+      .dish.is-long { font-size: 1.42rem; }
+      .dish.is-extra-long { font-size: 1.12rem; }
+      .category-button { min-height: 54px; }
+      .minor-button { min-height: 36px; }
+      .view-tabs { min-height: 35px; }
+      .tab-button { min-height: 35px; font-size: .76rem; }
+    }
+    /* end v8 jemechu compact updates */
   </style>
 </head>
 <body>
@@ -706,6 +1090,11 @@
       </button>
     </header>
 
+    <nav class="view-tabs" aria-label="화면 선택">
+      <button class="tab-button is-active" id="rouletteTab" type="button" aria-controls="rouletteView" aria-selected="true">뭐 먹지?</button>
+      <button class="tab-button" id="recordTab" type="button" aria-controls="recordView" aria-selected="false">지영이가 골라준 저녁 메뉴</button>
+    </nav>
+    <section class="view roulette-view" id="rouletteView">
     <section class="machine" aria-live="polite">
       <div class="status-strip">
         <div class="category-pill" id="categoryPill" data-category="밥">밥</div>
@@ -714,18 +1103,22 @@
 
       <div class="slot-area" id="slotArea">
         <div class="slot-window">
-          <div class="slot-label" id="slotLabel">26.09.04</div>
+          <div class="slot-label" id="slotLabel"></div>
           <div class="portrait-stage">
             <div class="speech-bubble" id="speechBubble">오늘의 메뉴는 ....</div>
-            <img class="portrait" src="jiyoung.png" alt="지영이 메뉴 추천">
+            <img class="portrait" id="portrait" src="jiyoung.png" alt="지영이 메뉴 추천" decoding="async">
           </div>
-          <div class="dish" id="dishName">제육덮밥</div>
+          <div class="dish" id="dishName">오늘 뭐 먹지?</div>
         </div>
       </div>
 
       <div class="actions">
-        <button class="minor-button" id="copyResult" type="button">결과 복사</button>
-        <button class="minor-button" id="spinAgain" type="button">한 번 더</button>
+        <button class="minor-button" id="copyResult" type="button">복사</button>
+        <button class="minor-button star-button" id="starResult" type="button" aria-pressed="false" aria-label="지영이가 골라준 메뉴로 표시" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 14.7 9l6.1.9-4.4 4.3 1 6.1L12 17.4l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z"></path></svg>
+          <span>별표</span>
+        </button>
+        <button class="minor-button" id="spinAgain" type="button">다시</button>
       </div>
     </section>
 
@@ -779,6 +1172,18 @@
       </nav>
       <div class="history" id="history" aria-label="최근 결과"></div>
     </footer>
+    </section>
+
+    <section class="view record-view" id="recordView" hidden>
+      <div class="record-panel">
+        <form class="record-form" id="pickForm">
+          <input id="pickDate" type="date" aria-label="날짜">
+          <input id="pickName" type="text" aria-label="메뉴" placeholder="메뉴">
+          <button id="addPick" type="submit">추가</button>
+        </form>
+        <div class="pick-list" id="pickList" aria-label="지영이가 골라준 저녁 메뉴"></div>
+      </div>
+    </section>
   </main>
 
   <dialog id="editorDialog">
@@ -820,219 +1225,83 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-    const STORAGE_KEY = "jemechu-roulette-v3";
-    const HISTORY_KEY = "jemechu-roulette-history-v3";
+    const STORAGE_KEY = "jemechu-roulette-menus-v8";
+    const PICKS_KEY = "jemechu-jiyoung-picks-v1";
+    const IDLE_IMAGE = "jiyoung.png";
+    const POINTING_IMAGE = "jiyoung_pointing.png";
 
     const DEFAULT_MENUS = {
       "밥": [
-        ["제육덮밥", "매콤하고 실패 확률 낮음"],
-        ["오므라이스", "케첩으로 마침표"],
-        ["카레라이스", "냉장고 야채 처리까지 가능"],
-        ["짜장밥", "면보다 밥이 당기는 날"],
-        ["소고기덮밥", "규동 느낌으로 가볍게"],
-        ["마파두부덮밥", "얼얼한 밥도둑"],
-        ["스팸마요덮밥", "간단하지만 강력함"],
-        ["참치마요덮밥", "편의점 감성 업그레이드"],
-        ["낙지덮밥", "매운맛으로 리셋"],
-        ["오징어덮밥", "불향 나면 더 좋음"],
-        ["새우볶음밥", "파기름 내면 승률 상승"],
-        ["계란볶음밥", "제일 단순한 정답"],
-        ["알밥", "톡톡 씹히는 재미"],
-        ["비빔밥", "야채 많은 척 가능"],
-        ["돌솥비빔밥", "누룽지까지 챙김"],
-        ["김밥", "라면이랑 붙이면 완전체"],
-        ["충무김밥", "오징어무침이 핵심"],
-        ["유부초밥", "작게 먹고 싶을 때"],
-        ["초밥", "기분 좋은 외식 카드"],
-        ["연어덮밥", "와사비 살짝"],
-        ["회덮밥", "새콤매콤하게"],
-        ["포케", "가볍고 색감 좋은 한 끼"],
-        ["샐러드볼", "드레싱이 본체"],
-        ["리조또", "크림이나 토마토로"],
-        ["로제파스타", "무난한 배달 강자"],
-        ["알리오올리오", "마늘 많이"],
-        ["토마토파스타", "상큼한 안전픽"],
-        ["크림파스타", "꾸덕한 저녁"],
-        ["라자냐", "치즈가 필요한 날"],
-        ["피자", "반반 조합 추천"],
-        ["햄버거", "감튀까지 가면 행복"],
-        ["타코", "손에 들고 먹는 저녁"],
-        ["부리또", "밥까지 들어간 든든함"],
-        ["쌀국수", "국물이 있지만 밥 카테고리 감성"],
-        ["팟타이", "새콤달콤한 면 선택"],
-        ["분짜", "가볍게 색다른 맛"],
-        ["샌드위치", "늦은 저녁에 좋음"],
-        ["토스트", "간단하고 따뜻함"],
-        ["떡볶이", "튀김 추가하면 저녁 인정"],
-        ["라볶이", "탄수화물 풀악셀"],
-        ["우동", "부담 적은 면 한 그릇"],
-        ["메밀소바", "시원하게 정리"],
-        ["냉면", "물냉 비냉 고민부터"],
-        ["콩국수", "계절 맞으면 강력함"],
-        ["칼국수", "김치가 맛있어야 함"],
-        ["수제비", "쫄깃한 집밥 느낌"],
-        ["만두", "찐만두 군만두 반반"],
-        ["비빔국수", "매콤새콤 빠른 선택"]
+        "제육덮밥", "오므라이스", "카레라이스", "하이라이스", "마파두부덮밥", "소고기덮밥", "규동", "가츠동",
+        "치킨마요덮밥", "스팸마요덮밥", "참치마요덮밥", "낙지덮밥", "오징어덮밥", "쭈꾸미덮밥", "새우볶음밥", "해물볶음밥",
+        "계란볶음밥", "나시고렝", "알밥", "비빔밥", "돌솥비빔밥", "돈카츠카레", "초밥", "연어덮밥", "회덮밥", "포케",
+        "리조또", "로제파스타", "토마토파스타", "크림파스타", "알리오올리오", "라자냐", "피자", "햄버거", "샌드위치", "토스트",
+        "타코", "부리또", "김밥", "참치김밥", "떡볶이", "엽기떡볶이", "신전떡볶이", "라볶이", "엽기닭볶음탕", "닭볶음탕",
+        "찜닭", "물갈비", "낙곱새", "쭈꾸미볶음", "아구찜", "월남쌈", "샤브샤브", "만두전골", "도시락", "편의점 도시락"
       ],
       "고기": [
-        ["굽네 오리지널", "담백한 구운 치킨"],
-        ["굽네 고추바사삭", "매콤바삭 대표 주자"],
-        ["굽네 볼케이노", "불맛 소스가 당길 때"],
-        ["BHC 뿌링클", "단짠 치즈가루 클래식"],
-        ["BHC 맛초킹", "간장 소스 계열"],
-        ["BBQ 황금올리브", "후라이드 정석"],
-        ["BBQ 자메이카 통다리", "양념 진한 닭다리"],
-        ["교촌 허니콤보", "달달짭짤한 안전픽"],
-        ["교촌 레드콤보", "매운 간장 치킨"],
-        ["네네치킨 스노윙치즈", "가루 치킨이 당기는 날"],
-        ["네네치킨 파닭", "파채로 산뜻하게"],
-        ["처갓집 슈프림양념", "달콤한 양념 강자"],
-        ["처갓집 양념치킨", "양념치킨 기본기"],
-        ["푸라닭 블랙알리오", "마늘간장 고급진 맛"],
-        ["푸라닭 고추마요", "매콤고소한 조합"],
-        ["60계 호랑이치킨", "짭짤매콤한 자극"],
-        ["멕시카나 땡초치킨", "매운맛 확실함"],
-        ["노랑통닭 알싸한 마늘치킨", "마늘 소스 듬뿍"],
-        ["페리카나 양념치킨", "옛날 양념 감성"],
-        ["호식이두마리치킨 매운간장", "두 마리 가성비"],
-        ["자담치킨 맵슐랭", "매운 치킨 후보"],
-        ["또래오래 갈릭반핫양념반", "반반으로 타협"],
-        ["지코바 숯불양념치킨", "치밥까지 가능"],
-        ["동근이 숯불두마리치킨", "숯불 양념으로 든든하게"],
-        ["꾸브라꼬 숯불두마리치킨", "구운 치킨 쪽 선택"],
-        ["오븐마루 로스트치킨", "담백한 오븐 치킨"],
-        ["삼겹살", "집이든 가게든 확실함"],
-        ["목살구이", "기름기 적당한 선택"],
-        ["항정살", "쫄깃고소한 특수부위"],
-        ["갈매기살", "소금구이로 좋음"],
-        ["돼지갈비", "달달한 양념 고기"],
-        ["소갈비살", "기분 내는 고기"],
-        ["LA갈비", "밥이랑 잘 맞음"],
-        ["차돌박이", "빨리 익어서 좋음"],
-        ["불고기", "달달한 집밥 고기"],
-        ["닭갈비", "볶음밥까지 예정됨"],
-        ["오리고기", "훈제도 로스도 좋음"],
-        ["족발", "막국수 붙이면 완성"],
-        ["보쌈", "김치가 승부처"],
-        ["수육", "담백하게 먹는 고기"],
-        ["곱창", "느끼함과 고소함 사이"],
-        ["대창", "강한 선택"],
-        ["막창", "소스 찍어 먹는 맛"],
-        ["양꼬치", "쯔란 필수"],
-        ["스테이크", "오늘은 칼질"],
-        ["돈카츠", "등심 안심 고민"],
-        ["치즈돈카츠", "쭉 늘어나는 치즈"],
-        ["가츠동", "돈카츠와 밥의 중간지대"],
-        ["함박스테이크", "소스와 계란 조합"],
-        ["미트볼 토마토파스타", "고기 들어간 파스타"]
+        "굽네 오리지널", "굽네 고추바사삭", "굽네 볼케이노", "BHC 뿌링클", "BHC 맛초킹", "BBQ 황금올리브", "BBQ 자메이카 통다리",
+        "교촌 허니콤보", "교촌 레드콤보", "네네치킨 스노윙치즈", "네네치킨 파닭", "처갓집 슈프림양념", "처갓집 양념치킨",
+        "푸라닭 블랙알리오", "푸라닭 고추마요", "60계 호랑이치킨", "멕시카나 땡초치킨", "노랑통닭 알싸한 마늘치킨",
+        "페리카나 양념치킨", "호식이두마리치킨 매운간장", "자담치킨 맵슐랭", "또래오래 갈릭반핫양념반", "지코바 숯불양념치킨",
+        "동근이 숯불두마리치킨", "꾸브라꼬 숯불두마리치킨", "삼겹살", "목살구이", "항정살", "갈매기살", "돼지갈비",
+        "소갈비살", "LA갈비", "차돌박이", "불고기", "닭갈비", "오리고기", "훈제오리", "족발", "보쌈", "수육", "곱창",
+        "대창", "막창", "양꼬치", "스테이크", "돈카츠", "치즈돈카츠", "함박스테이크", "바베큐폭립", "닭발", "닭꼬치"
       ],
       "국물": [
-        ["부대찌개", "라면사리 넣으면 끝"],
-        ["오뎅탕", "뜨끈하고 가벼운 국물"],
-        ["된장찌개", "밥이랑 제일 안정적"],
-        ["순두부찌개", "계란 톡"],
-        ["청국장", "강하지만 든든함"],
-        ["감자탕", "뼈 뜯는 저녁"],
-        ["뼈해장국", "혼밥도 가능한 국물"],
-        ["설렁탕", "소금 후추로 마무리"],
-        ["곰탕", "맑고 든든한 선택"],
-        ["갈비탕", "고기도 국물도 챙김"],
-        ["육개장", "얼큰한 소고기 국물"],
-        ["소고기무국", "담백한 집밥 국물"],
-        ["미역국", "속 편한 저녁"],
-        ["북엇국", "깔끔하고 개운함"],
-        ["콩나물국밥", "뜨겁게 한 그릇"],
-        ["돼지국밥", "부추 듬뿍"],
-        ["순대국", "다대기 조절"],
-        ["내장탕", "진한 국물 선택"],
-        ["추어탕", "몸보신 쪽"],
-        ["삼계탕", "닭 한 마리 든든함"],
-        ["닭한마리", "칼국수까지 가능"],
-        ["샤브샤브", "야채도 챙기는 척"],
-        ["마라탕", "재료 고르는 재미"],
-        ["훠궈", "매운탕 백탕 반반"],
-        ["짬뽕", "불맛 나는 국물면"],
-        ["울면", "부드러운 중식 국물"],
-        ["쌀국수", "숙주와 고수 선택"],
-        ["라멘", "돈코츠 쇼유 미소 중 택"],
-        ["나가사키짬뽕", "하얀 국물인데 진함"],
-        ["우동전골", "부담 없는 뜨끈함"],
-        ["칼만두국", "칼국수와 만두 동시 해결"],
-        ["떡국", "계란지단 있으면 좋음"],
-        ["만둣국", "냉동만두 구원투수"],
-        ["수제비", "진한 멸치육수로"],
-        ["알탕", "얼큰하고 푸짐함"],
-        ["대구탕", "시원한 생선 국물"],
-        ["매운탕", "회 먹고 난 다음 맛"],
-        ["아구찜 국물볶음밥", "국물파의 변칙 선택"],
-        ["조개탕", "개운하고 시원함"],
-        ["홍합탕", "간단한 포차 느낌"],
-        ["토마토스튜", "빵이랑 잘 맞음"],
-        ["크림스프와 바게트", "가볍고 따뜻하게"],
-        ["민물새우탕", "시원한 매운 국물"]
+        "부대찌개", "어묵탕", "순두부찌개", "된장찌개", "순대국", "돼지국밥", "뼈해장국", "감자탕", "설렁탕", "곰탕", "갈비탕",
+        "육개장", "닭곰탕", "닭개장", "콩나물국밥", "곱창전골", "샤브칼국수", "닭한마리", "샤브샤브", "마라탕", "훠궈",
+        "짬뽕", "나가사키짬뽕", "탄탄멘", "라멘", "쌀국수", "우동", "칼국수", "칼만두국", "만둣국", "떡만둣국", "수제비",
+        "알탕", "매운탕", "조개탕", "홍합탕", "라면", "신라면", "진라면 매운맛", "열라면", "육개장 사발면", "튀김우동 컵라면",
+        "컵누들 매콤한맛", "편의점 라면 세트"
       ],
       "졍스팟": [
-        ["Red&Green 버거", ""],
-        ["강남 모모베.이글", ""],
-        ["경춘자라닭,블루보틀 삼성카페", ""],
-        ["논현 외계인방앗간", ""],
-        ["동무밥상", ""],
-        ["마루돈까스 합정", ""],
-        ["망원 꼬꼬댁", ""],
-        ["망원 포항물회", ""],
-        ["망원 행진", ""],
-        ["삼성동수제비", ""],
-        ["상수김치삼겹살", ""],
-        ["식물학,올드페리도넛", ""],
-        ["연남물갈비", ""],
-        ["연남 피프에스프레소바", ""],
-        ["연희김밥", ""],
-        ["저스트텐동 연남", ""],
-        ["정돈", ""],
-        ["종로 구들장삼겹살", ""],
-        ["청담91떡볶이", ""],
-        ["청담 옛날집", ""],
-        ["초기전", ""],
-        ["합정 스케줄", ""],
-        ["합정 시오", ""],
-        ["합정 오레노라멘", ""],
-        ["합정 조이 떡볶이", ""],
-        ["카페 코르", ""],
-        ["합정 호맥", ""]
+        "Red&Green 버거", "강남 모모베.이글", "경춘자라닭,블루보틀 삼성카페", "논현 외계인방앗간", "동무밥상", "마루돈까스 합정",
+        "망원 꼬꼬댁", "망원 포항물회", "망원 행진", "삼성동수제비", "상수김치삼겹살", "식물학,올드페리도넛", "연남물갈비",
+        "연남 피프에스프레소바", "연희김밥", "저스트텐동 연남", "정돈", "종로 구들장삼겹살", "청담91떡볶이", "청담 옛날집",
+        "초기전", "합정 스케줄", "합정 시오", "합정 오레노라멘", "합정 조이 떡볶이", "카페 코르", "합정 호맥"
       ]
     };
 
-    const CATEGORY_ORDER = ["밥", "고기", "국물", "랜덤", "졍스팟"];
-    const CATEGORY_PREFIX = {
-      "밥": "BAP",
-      "고기": "MEAT",
-      "국물": "SOUP",
-      "랜덤": "RAND",
-      "졍스팟": "SPOT"
-    };
+    const DEFAULT_PICKS = [
+      { id: "2026-08-30|곱창전골", date: "2026-08-30", name: "곱창전골", category: "지영" }
+    ];
 
-    const state = {
-      menus: loadMenus(),
-      currentCategory: "밥",
-      currentItem: null,
-      spinning: false,
-      history: []
-    };
+    const CATEGORY_ORDER = ["밥", "고기", "국물", "랜덤", "졍스팟"];
+    const CATEGORY_PREFIX = { "밥": "BAP", "고기": "MEAT", "국물": "SOUP", "랜덤": "RAND", "졍스팟": "SPOT" };
 
     const $ = (selector) => document.querySelector(selector);
     const $$ = (selector) => Array.from(document.querySelectorAll(selector));
 
+    const state = {
+      menus: loadMenus(),
+      picks: loadPicks(),
+      currentCategory: "밥",
+      currentItem: null,
+      finalized: false,
+      spinning: false
+    };
+
     const els = {
       menuCount: $("#menuCount"),
+      rouletteTab: $("#rouletteTab"),
+      recordTab: $("#recordTab"),
+      rouletteView: $("#rouletteView"),
+      recordView: $("#recordView"),
+      pickForm: $("#pickForm"),
+      pickDate: $("#pickDate"),
+      pickName: $("#pickName"),
+      pickList: $("#pickList"),
       categoryPill: $("#categoryPill"),
       resultId: $("#resultId"),
       slotArea: $("#slotArea"),
       slotLabel: $("#slotLabel"),
+      speechBubble: $("#speechBubble"),
+      portrait: $("#portrait"),
       dishName: $("#dishName"),
-      dishNote: $("#dishNote"),
       copyResult: $("#copyResult"),
+      starResult: $("#starResult"),
       spinAgain: $("#spinAgain"),
-      history: $("#history"),
       openEditor: $("#openEditor"),
       editorDialog: $("#editorDialog"),
       editRice: $("#editRice"),
@@ -1045,12 +1314,13 @@
     };
 
     function cloneMenus(source) {
-      return Object.fromEntries(
-        Object.entries(source).map(([category, rows]) => [
-          category,
-          rows.map(([name, note]) => ({ name, note }))
-        ])
-      );
+      return Object.fromEntries(Object.entries(source).map(([category, rows]) => [category, rows.map(toMenuItem)]));
+    }
+
+    function toMenuItem(item) {
+      if (typeof item === "string") return { name: item.trim(), note: "" };
+      if (Array.isArray(item)) return { name: String(item[0] || "").trim(), note: String(item[1] || "").trim() };
+      return { name: String(item?.name || "").trim(), note: String(item?.note || "").trim() };
     }
 
     function loadMenus() {
@@ -1069,46 +1339,71 @@
     }
 
     function normalizeSavedList(list, fallback) {
-      if (!Array.isArray(list) || list.length === 0) {
-        return fallback.map(([name, note]) => ({ name, note }));
-      }
-      return list
-        .map((item) => {
-          if (typeof item === "string") return parseMenuLine(item);
-          return {
-            name: String(item.name || "").trim(),
-            note: String(item.note || "").trim()
-          };
-        })
-        .filter((item) => item.name);
+      if (!Array.isArray(list) || list.length === 0) return fallback.map(toMenuItem);
+      const parsed = list.map(toMenuItem).filter((item) => item.name);
+      return parsed.length ? parsed : fallback.map(toMenuItem);
     }
 
-    function loadHistory() {
-      return [];
-    } catch {
-        return [];
-      }
+    function loadPicks() {
+      let saved = [];
+      try {
+        const raw = JSON.parse(localStorage.getItem(PICKS_KEY));
+        if (Array.isArray(raw)) saved = raw;
+      } catch {}
+      const merged = [...DEFAULT_PICKS, ...saved]
+        .map(normalizePick)
+        .filter(Boolean);
+      return dedupePicks(merged);
+    }
+
+    function normalizePick(pick) {
+      const date = String(pick?.date || "").trim();
+      const name = String(pick?.name || "").trim();
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !name) return null;
+      return {
+        id: makePickId(date, name),
+        date,
+        name,
+        category: String(pick?.category || "지영").trim() || "지영"
+      };
+    }
+
+    function dedupePicks(list) {
+      const seen = new Set();
+      return list.filter((pick) => {
+        if (seen.has(pick.id)) return false;
+        seen.add(pick.id);
+        return true;
+      });
     }
 
     function saveMenusToStorage() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state.menus));
     }
 
-    function saveHistory() {
-      clearStoredHistory();
+    function savePicks() {
+      const custom = state.picks.filter((pick) => !DEFAULT_PICKS.some((base) => base.id === pick.id));
+      localStorage.setItem(PICKS_KEY, JSON.stringify(custom));
     }
 
     function getPool(category) {
       if (category === "랜덤") {
-        return CATEGORY_ORDER.filter((realCategory) => realCategory !== "랜덤").flatMap((realCategory) =>
-          state.menus[realCategory].map((item, index) => ({ ...item, category: realCategory, index }))
-        );
+        return CATEGORY_ORDER
+          .filter((realCategory) => realCategory !== "랜덤")
+          .flatMap((realCategory) => state.menus[realCategory].map((item, index) => ({ ...item, category: realCategory, index })));
       }
       return state.menus[category].map((item, index) => ({ ...item, category, index }));
     }
 
     function randomFrom(list) {
       return list[Math.floor(Math.random() * list.length)];
+    }
+
+    function todayISO(date = new Date()) {
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, "0");
+      const dd = String(date.getDate()).padStart(2, "0");
+      return `${yyyy}-${mm}-${dd}`;
     }
 
     function formatDateYYMMDD(date = new Date()) {
@@ -1118,10 +1413,13 @@
       return `${yy}.${mm}.${dd}`;
     }
 
-    function getDisplayId(category, item) {
-      const prefix = category === "랜덤" ? CATEGORY_PREFIX["랜덤"] : CATEGORY_PREFIX[item.category];
-      const number = String(item.index + 1).padStart(3, "0");
-      return `${prefix}-${number}`;
+    function formatKoreanDate(value) {
+      const [year, month, day] = value.split("-");
+      return `${year}년 ${Number(month)}월 ${Number(day)}일`;
+    }
+
+    function makePickId(date, name) {
+      return `${date}|${name.trim()}`;
     }
 
     function setDishText(name) {
@@ -1130,19 +1428,35 @@
       els.dishName.textContent = name;
     }
 
-    function renderResult(category, item, label = "오늘 저녁") {
+    function setPose(kind) {
+      const nextSrc = kind === "pointing" ? POINTING_IMAGE : IDLE_IMAGE;
+      if (!els.portrait.src.endsWith(nextSrc)) els.portrait.src = nextSrc;
+      els.slotArea.classList.toggle("result-ready", kind === "pointing");
+    }
+
+    function renderInitial() {
+      state.finalized = false;
+      state.currentItem = null;
+      els.slotLabel.textContent = formatDateYYMMDD();
+      els.speechBubble.textContent = "오늘의 메뉴는 ....";
+      setDishText("오늘 뭐 먹지?");
+      setPose("idle");
+      updateStarUI();
+      updateMenuCount();
+    }
+
+    function renderResult(category, item, finalized = false) {
       state.currentCategory = category;
       state.currentItem = item;
+      state.finalized = finalized;
       els.categoryPill.dataset.category = category;
       els.categoryPill.textContent = category;
-      if (els.resultId) {
-        els.resultId.textContent = "";
-      }
+      if (els.resultId) els.resultId.textContent = "";
       els.slotLabel.textContent = formatDateYYMMDD();
+      els.speechBubble.textContent = finalized ? "오늘의 메뉴는 이거야!" : "오늘의 메뉴는 ....";
       setDishText(item.name);
-      if (els.dishNote) {
-        els.dishNote.textContent = item.note || `${item.category} 후보`;
-      }
+      setPose(finalized ? "pointing" : "idle");
+      updateStarUI();
       updateMenuCount();
     }
 
@@ -1152,9 +1466,7 @@
     }
 
     function vibrate(pattern) {
-      if ("vibrate" in navigator) {
-        navigator.vibrate(pattern);
-      }
+      if ("vibrate" in navigator) navigator.vibrate(pattern);
     }
 
     function spin(category) {
@@ -1166,10 +1478,12 @@
       }
 
       const target = randomFrom(pool);
-      const duration = 2350 + Math.floor(Math.random() * 650);
+      const duration = 2150 + Math.floor(Math.random() * 520);
       const start = performance.now();
       let lastTick = 0;
       state.spinning = true;
+      state.finalized = false;
+      setPose("idle");
       setControlsDisabled(true);
       els.slotArea.classList.add("spinning");
       els.slotLabel.textContent = formatDateYYMMDD();
@@ -1178,11 +1492,10 @@
       function frame(now) {
         const elapsed = now - start;
         const progress = Math.min(elapsed / duration, 1);
-        const delay = 26 + progress * progress * 175;
+        const delay = 24 + progress * progress * 168;
 
         if (now - lastTick > delay) {
-          const item = randomFrom(pool);
-          renderResult(category, item, progress > .72 ? "슬슬 멈추는 중" : "돌아가는 중");
+          renderResult(category, randomFrom(pool), false);
           lastTick = now;
         }
 
@@ -1193,8 +1506,7 @@
 
         state.spinning = false;
         els.slotArea.classList.remove("spinning");
-        renderResult(category, target, "당첨");
-        clearStoredHistory();
+        renderResult(category, target, true);
         setControlsDisabled(false);
         burstSparks();
         vibrate([24, 36, 28]);
@@ -1204,27 +1516,101 @@
     }
 
     function setControlsDisabled(disabled) {
-      $$(".category-button, #spinAgain").forEach((button) => {
-        button.disabled = disabled;
+      $$(".category-button, #spinAgain").forEach((button) => { button.disabled = disabled; });
+      updateStarUI();
+    }
+
+    function currentPickId() {
+      if (!state.currentItem || !state.finalized) return "";
+      return makePickId(todayISO(), state.currentItem.name);
+    }
+
+    function isCurrentStarred() {
+      const id = currentPickId();
+      return Boolean(id && state.picks.some((pick) => pick.id === id));
+    }
+
+    function updateStarUI() {
+      const active = isCurrentStarred();
+      els.starResult.disabled = state.spinning || !state.finalized || !state.currentItem;
+      els.starResult.setAttribute("aria-pressed", String(active));
+      const label = els.starResult.querySelector("span");
+      if (label) label.textContent = active ? "별표됨" : "별표";
+    }
+
+    function toggleCurrentPick() {
+      if (!state.currentItem || !state.finalized) return;
+      const date = todayISO();
+      const id = makePickId(date, state.currentItem.name);
+      const exists = state.picks.some((pick) => pick.id === id);
+      if (exists) {
+        state.picks = state.picks.filter((pick) => pick.id !== id);
+      } else {
+        state.picks = dedupePicks([{ id, date, name: state.currentItem.name, category: state.currentItem.category }, ...state.picks]);
+      }
+      savePicks();
+      renderPicks();
+      updateStarUI();
+      showToast(exists ? "별표를 껐어요" : "기록에 넣었어요");
+    }
+
+    function renderPicks() {
+      els.pickList.innerHTML = "";
+      const rows = [...state.picks].sort((a, b) => b.date.localeCompare(a.date));
+      rows.forEach((pick) => {
+        const row = document.createElement("div");
+        row.className = "pick-row";
+
+        const date = document.createElement("div");
+        date.className = "pick-date";
+        date.textContent = formatKoreanDate(pick.date);
+
+        const name = document.createElement("div");
+        name.className = "pick-name";
+        name.textContent = pick.name;
+
+        const remove = document.createElement("button");
+        remove.className = "pick-remove";
+        remove.type = "button";
+        remove.setAttribute("aria-label", `${pick.name} 별표 끄기`);
+        remove.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 14.7 9l6.1.9-4.4 4.3 1 6.1L12 17.4l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z"></path></svg>';
+        remove.addEventListener("click", () => {
+          state.picks = state.picks.filter((item) => item.id !== pick.id);
+          savePicks();
+          renderPicks();
+          updateStarUI();
+        });
+
+        row.append(date, name, remove);
+        els.pickList.appendChild(row);
       });
     }
 
-    function addHistory() {
-      state.history = [];
-      clearStoredHistory();
-      renderHistory();
+    function addManualPick(event) {
+      event.preventDefault();
+      const date = els.pickDate.value || todayISO();
+      const name = els.pickName.value.trim();
+      if (!name) {
+        showToast("메뉴를 적어줘요");
+        return;
+      }
+      state.picks = dedupePicks([{ id: makePickId(date, name), date, name, category: "지영" }, ...state.picks]);
+      savePicks();
+      renderPicks();
+      updateStarUI();
+      els.pickName.value = "";
+      showToast("추가했어요");
     }
 
-    function renderHistory() {
-      els.history.innerHTML = "";
-    }
-
-    function clearStoredHistory() {
-      try {
-        Object.keys(localStorage)
-          .filter((key) => key.startsWith("jemechu-roulette-history"))
-          .forEach((key) => localStorage.removeItem(key));
-      } catch {}
+    function showView(view) {
+      const record = view === "record";
+      els.rouletteView.hidden = record;
+      els.recordView.hidden = !record;
+      els.rouletteTab.classList.toggle("is-active", !record);
+      els.recordTab.classList.toggle("is-active", record);
+      els.rouletteTab.setAttribute("aria-selected", String(!record));
+      els.recordTab.setAttribute("aria-selected", String(record));
+      if (record) renderPicks();
     }
 
     function getCategoryColor(category) {
@@ -1236,12 +1622,12 @@
     }
 
     function burstSparks() {
-      const colors = ["#f2c84b", "#f05745", "#009a8d", "#4f9d69", "#222222"];
-      for (let i = 0; i < 18; i += 1) {
+      const colors = ["#f2c84b", "#f05745", "#009a8d", "#cf3f86", "#222222"];
+      for (let i = 0; i < 16; i += 1) {
         const spark = document.createElement("span");
         spark.className = "spark";
-        spark.style.left = `${46 + Math.random() * 8}%`;
-        spark.style.top = `${47 + Math.random() * 8}%`;
+        spark.style.left = `${42 + Math.random() * 16}%`;
+        spark.style.top = `${50 + Math.random() * 14}%`;
         spark.style.background = colors[i % colors.length];
         spark.style.setProperty("--tx", `${-120 + Math.random() * 240}px`);
         spark.style.setProperty("--ty", `${-140 + Math.random() * 210}px`);
@@ -1252,8 +1638,11 @@
     }
 
     async function copyResult() {
-      if (!state.currentItem) return;
-      const text = `[${state.currentCategory}] ${state.currentItem.name}`;
+      if (!state.currentItem || !state.finalized) {
+        showToast("아직 메뉴가 없어요");
+        return;
+      }
+      const text = `${formatDateYYMMDD()} ${state.currentItem.name}`;
       try {
         await navigator.clipboard.writeText(text);
         showToast("복사했어요");
@@ -1266,17 +1655,11 @@
       els.toast.textContent = message;
       els.toast.classList.add("show");
       clearTimeout(showToast.timer);
-      showToast.timer = setTimeout(() => {
-        els.toast.classList.remove("show");
-      }, 1500);
+      showToast.timer = setTimeout(() => els.toast.classList.remove("show"), 1500);
     }
 
     function parseMenuLine(line) {
-      const [rawName, ...rawNote] = line.split("|");
-      return {
-        name: rawName.trim(),
-        note: rawNote.join("|").trim()
-      };
+      return { name: line.trim(), note: "" };
     }
 
     function listToText(list) {
@@ -1284,15 +1667,8 @@
     }
 
     function textToList(text, fallbackCategory) {
-      const parsed = text
-        .split(/\n+/)
-        .map(parseMenuLine)
-        .filter((item) => item.name)
-        .map((item) => ({
-          name: item.name,
-          note: item.note || `${fallbackCategory} 후보`
-        }));
-      return parsed.length ? parsed : cloneMenus({ [fallbackCategory]: DEFAULT_MENUS[fallbackCategory] })[fallbackCategory];
+      const parsed = text.split(/\n+/).map(parseMenuLine).filter((item) => item.name);
+      return parsed.length ? parsed : DEFAULT_MENUS[fallbackCategory].map(toMenuItem);
     }
 
     function openEditor() {
@@ -1300,11 +1676,8 @@
       els.editMeat.value = listToText(state.menus["고기"]);
       els.editSoup.value = listToText(state.menus["국물"]);
       els.editSpot.value = listToText(state.menus["졍스팟"]);
-      if (typeof els.editorDialog.showModal === "function") {
-        els.editorDialog.showModal();
-      } else {
-        showToast("이 브라우저는 편집 창을 지원하지 않아요");
-      }
+      if (typeof els.editorDialog.showModal === "function") els.editorDialog.showModal();
+      else showToast("편집 창을 열 수 없어요");
     }
 
     function saveEditor() {
@@ -1325,31 +1698,29 @@
       els.editSoup.value = listToText(state.menus["국물"]);
       els.editSpot.value = listToText(state.menus["졍스팟"]);
       updateMenuCount();
+      renderInitial();
       showToast("기본 메뉴로 바꿨어요");
     }
 
     function attachEvents() {
-      $$(".category-button").forEach((button) => {
-        button.addEventListener("click", () => spin(button.dataset.category));
-      });
+      $$(".category-button").forEach((button) => button.addEventListener("click", () => spin(button.dataset.category)));
       els.spinAgain.addEventListener("click", () => spin(state.currentCategory || "랜덤"));
       els.copyResult.addEventListener("click", copyResult);
+      els.starResult.addEventListener("click", toggleCurrentPick);
+      els.rouletteTab.addEventListener("click", () => showView("roulette"));
+      els.recordTab.addEventListener("click", () => showView("record"));
+      els.pickForm.addEventListener("submit", addManualPick);
       els.openEditor.addEventListener("click", openEditor);
       els.saveMenus.addEventListener("click", saveEditor);
       els.resetMenus.addEventListener("click", resetMenus);
       document.addEventListener("keydown", (event) => {
-        if (event.repeat || state.spinning || els.editorDialog.open) return;
-        const map = {
-          "1": "밥",
-          "2": "고기",
-          "3": "국물",
-          "4": "랜덤",
-          "5": "졍스팟",
-          "Enter": state.currentCategory || "랜덤",
-          " ": state.currentCategory || "랜덤"
-        };
+        const target = event.target;
+        const typing = target && (["INPUT", "TEXTAREA", "SELECT", "BUTTON"].includes(target.tagName) || target.isContentEditable);
+        if (typing || event.repeat || state.spinning || els.editorDialog.open) return;
+        const map = { "1": "밥", "2": "고기", "3": "국물", "4": "랜덤", "5": "졍스팟", "Enter": state.currentCategory || "랜덤", " ": state.currentCategory || "랜덤" };
         if (map[event.key]) {
           event.preventDefault();
+          showView("roulette");
           spin(map[event.key]);
         }
       });
@@ -1361,11 +1732,20 @@
       navigator.serviceWorker.register("./sw.js").catch(() => {});
     }
 
+    function clearOldHistoryKeys() {
+      try {
+        Object.keys(localStorage)
+          .filter((key) => key.startsWith("jemechu-roulette-history"))
+          .forEach((key) => localStorage.removeItem(key));
+      } catch {}
+    }
+
     function init() {
       attachEvents();
-      clearStoredHistory();
-      renderHistory();
-      renderResult("밥", { ...state.menus["밥"][0], category: "밥", index: 0 }, "오늘 저녁");
+      clearOldHistoryKeys();
+      els.pickDate.value = todayISO();
+      renderPicks();
+      renderInitial();
       registerServiceWorker();
     }
 

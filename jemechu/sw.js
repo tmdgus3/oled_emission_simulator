@@ -1,9 +1,11 @@
-const CACHE_NAME = "jemechu-roulette-v7";
+const CACHE_NAME = "what-to-eat-v9";
 const ASSETS = [
+  "./",
   "./index.html",
   "./manifest.webmanifest",
   "./icon.svg",
-  "./jiyoung.png"
+  "./jiyoung.png",
+  "./jiyoung_pointing.png"
 ];
 
 self.addEventListener("install", (event) => {
@@ -24,10 +26,19 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request).catch(() => caches.match("./index.html"));
-    })
-  );
+
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put("./index.html", copy)).catch(() => {});
+          return response;
+        })
+        .catch(() => caches.match("./index.html"))
+    );
+    return;
+  }
+
+  event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request)));
 });

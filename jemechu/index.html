@@ -1063,6 +1063,19 @@
       .tab-button { min-height: 35px; font-size: .76rem; }
     }
     /* end v8 jemechu compact updates */
+
+    /* v11 image parity: keep before/after character size identical */
+    .slot-area.result-ready .portrait {
+      height: min(52dvh, 390px);
+      transform: translateY(-6px);
+    }
+
+    @media (max-height: 760px) {
+      .slot-area.result-ready .portrait {
+        height: min(45dvh, 330px);
+        transform: translateY(-6px);
+      }
+    }
   </style>
 </head>
 <body>
